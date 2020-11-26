@@ -1,0 +1,46 @@
+<edmx:Edmx Version="1.0"
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="./IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='FIORI_PGW')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZCDS_PM_RMCM_DETAIL_ITEM_CDS" xml:lang="en" sap:schema-version="1"
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="ZCDS_PM_RMCM_DETAIL_ITEMType" sap:label="RMCM Detailed Items" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="rbukrs"/>
+                    <PropertyRef Name="gjahr"/>
+                    <PropertyRef Name="racct"/>
+                </Key>
+                <Property Name="rbukrs" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Company Code"/>
+                <Property Name="gjahr" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative" sap:label="Fiscal Year"/>
+                <Property Name="racct" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Account Number"/>
+                <Property Name="hsl" Type="Edm.Decimal" Precision="24" Scale="3" sap:label="Amnt in CompCd Crcy" sap:quickinfo="Amount in Company Code Currency"/>
+                <Property Name="poper" Type="Edm.String" MaxLength="3" sap:display-format="NonNegative" sap:label="Posting Period"/>
+                <Property Name="budat" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Posting Date" sap:quickinfo="Posting Date in the Document"/>
+                <Property Name="belnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Document Number" sap:quickinfo="Accounting Document Number"/>
+                <Property Name="matnr" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="prctr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Profit Center"/>
+                <Property Name="aufnr" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Order" sap:quickinfo="Order Number"/>
+                <Property Name="equnr" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Equipment" sap:quickinfo="Equipment Number"/>
+                <Property Name="tplnr" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Functional Location"/>
+                <Property Name="butxt" Type="Edm.String" MaxLength="25" sap:label="Company Name" sap:quickinfo="Name of Company Code or Company"/>
+                <Property Name="txt20" Type="Edm.String" MaxLength="20" sap:label="Short Text" sap:quickinfo="G/L account short text"/>
+                <Property Name="maktx" Type="Edm.String" MaxLength="40" sap:label="Material description"/>
+                <Property Name="auart" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Order Type"/>
+                <Property Name="eqktu" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Equipment descript." sap:quickinfo="Equipment description in capital letters"/>
+                <Property Name="pltxu" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Description" sap:quickinfo="Description of functional location in capital letters"/>
+            </EntityType>
+            <EntityContainer Name="ZCDS_PM_RMCM_DETAIL_ITEM_CDS_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="ZCDS_PM_RMCM_DETAIL_ITEM" EntityType="ZCDS_PM_RMCM_DETAIL_ITEM_CDS.ZCDS_PM_RMCM_DETAIL_ITEMType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
+            </EntityContainer>
+            <atom:link rel="self" href="./sap/ZCDS_PM_RMCM_DETAIL_ITEM_CDS/$metadata"
+                xmlns:atom="http://www.w3.org/2005/Atom"/>
+                <atom:link rel="latest-version" href="./sap/ZCDS_PM_RMCM_DETAIL_ITEM_CDS/$metadata"
+                    xmlns:atom="http://www.w3.org/2005/Atom"/>
+                </Schema>
+            </edmx:DataServices>
+        </edmx:Edmx>
