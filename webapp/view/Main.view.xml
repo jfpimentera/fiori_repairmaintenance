@@ -51,18 +51,18 @@
 								<smartFilterBar:customControl>
 									<ComboBox id="periodFromComboBox" selectedKey="01">
 										<!--change="periodTypeChanged"-->
-										<core:Item key="01" text="1"/>
-										<core:Item key="02" text="2"/>
-										<core:Item key="03" text="3"/>
-										<core:Item key="04" text="4"/>
-										<core:Item key="05" text="5"/>
-										<core:Item key="06" text="6"/>
-										<core:Item key="07" text="7"/>
-										<core:Item key="08" text="8"/>
-										<core:Item key="09" text="9"/>
-										<core:Item key="010" text="10"/>
-										<core:Item key="11" text="11"/>
-										<core:Item key="12" text="12"/>
+											<core:Item key="01" text="January"/>
+											<core:Item key="02" text="February"/>
+											<core:Item key="03" text="March"/>
+											<core:Item key="04" text="April"/>
+											<core:Item key="05" text="May"/>
+											<core:Item key="6" text="June"/>
+											<core:Item key="07" text="July"/>
+											<core:Item key="08" text="August"/>
+											<core:Item key="09" text="September"/>
+											<core:Item key="10" text="October"/>
+											<core:Item key="11" text="November"/>
+											<core:Item key="12" text="December"/>
 									</ComboBox>
 								</smartFilterBar:customControl>
 							</smartFilterBar:ControlConfiguration>
@@ -70,46 +70,33 @@
 								<smartFilterBar:customControl>
 									<ComboBox id="periodToComboBox" selectedKey="01">
 										<!--change="periodTypeChanged"-->
-										<core:Item key="01" text="1"/>
-										<core:Item key="02" text="2"/>
-										<core:Item key="03" text="3"/>
-										<core:Item key="04" text="4"/>
-										<core:Item key="05" text="5"/>
-										<core:Item key="06" text="6"/>
-										<core:Item key="07" text="7"/>
-										<core:Item key="08" text="8"/>
-										<core:Item key="09" text="9"/>
-										<core:Item key="10" text="10"/>
-										<core:Item key="11" text="11"/>
-										<core:Item key="12" text="12"/>
+												<core:Item key="01" text="January"/>
+												<core:Item key="02" text="February"/>
+												<core:Item key="03" text="March"/>
+												<core:Item key="04" text="April"/>
+												<core:Item key="05" text="May"/>
+												<core:Item key="06" text="June"/>
+												<core:Item key="7" text="July"/>
+												<core:Item key="08" text="August"/>
+												<core:Item key="09" text="September"/>
+												<core:Item key="10" text="October"/>
+												<core:Item key="11" text="November"/>
+												<core:Item key="12" text="December"/>
 									</ComboBox>
 								</smartFilterBar:customControl>
 							</smartFilterBar:ControlConfiguration>
-							
 						</smartFilterBar:controlConfiguration>
-						
-						<!--<smartFilterBar:controlConfiguration>-->
-						<!--</smartFilterBar:controlConfiguration>-->
 						 
 						
 						<smartFilterBar:controlConfiguration>
-							<smartFilterBar:ControlConfiguration filterType="single" id="FiscalYear" key="FiscalYear" index="10" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" mandatory="mandatory">
-								<!--<Input value="{path: '/currDate'}"></Input>-->
-								<smartFilterBar:defaultFilterValues>
-									<smartFilterBar:SelectOption operator="EQ" low="{path: '/currDate'}"></smartFilterBar:SelectOption>
-									<!--<smartFilterBar:SelectOption operator="EQ" low="5100"></smartFilterBar:SelectOption>-->
-								</smartFilterBar:defaultFilterValues>
+							<smartFilterBar:ControlConfiguration key="FiscalYear" index="10" groupId="_BASIC" label="Year" mandatory="mandatory">
+								<smartFilterBar:customControl>
+									<ComboBox id="FiscalYear" selectedKey="paramYearModel/years>key" items="{paramYearModel>/years}" >
+										<core:Item key="{paramYearModel>key}" text="{paramYearModel>key}"/>
+									</ComboBox>
+								</smartFilterBar:customControl>
 							</smartFilterBar:ControlConfiguration>
 						</smartFilterBar:controlConfiguration>
-						
-						<!--<smartFilterBar:controlConfiguration>-->
-						<!--	<smartFilterBar:ControlConfiguration key="FiscalYear" index="10" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" mandatory="mandatory">-->
-						<!--		<smartFilterBar:customControl>-->
-						<!--			<Input id="FiscalYear" value="{path: '/currDate'}" placeholder="As Of Date"/>-->
-						<!--		</smartFilterBar:customControl>-->
-						<!--	</smartFilterBar:ControlConfiguration>-->
-						<!--</smartFilterBar:controlConfiguration>-->
-						
 						
 						<smartFilterBar:layoutData>
 							<FlexItemData shrinkFactor="0"/>

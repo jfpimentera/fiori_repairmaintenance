@@ -5,14 +5,16 @@ sap.ui.define([
 	"sap/ui/core/format/NumberFormat",
 	"sap/ui/model/Filter", 
 	"sap/ui/model/FilterOperator",
+	"sap/ui/core/format/DateFormat",
 	"sap/ui/model/json/JSONModel"
-], function(Controller, ChartFormatter, Format, NumberFormat, Filter, FilterOperator, JSONModel) {
+], function(Controller, ChartFormatter, Format, NumberFormat, Filter, FilterOperator, DateFormat, JSONModel) {
 	"use strict";
 
 	return Controller.extend("ZUI_PM_RM_COST_MONITORING.controller.Main", {
 
 		onInit: function() {
 
+			this.setFields();
 			var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
 				pattern: "yyyy"
 			});
@@ -55,7 +57,7 @@ sap.ui.define([
 			
 
 			// this.setDataTable("1", "1", yyyy);
-			this.setDataTable("1", 	periodTo.getSelectedKey(), yyyy);
+			this.setDataTable("1", 	periodTo.getSelectedKey(), dateFormatted);
 			// this.setModel("smartTableDetails", "/ZCDS_PM_RMCM_DETAIL_ITEM", "itemDetail");
 
 			this.getView().addStyleClass(this.getContentDensityClass());
@@ -74,7 +76,7 @@ sap.ui.define([
 		},
 
 		setDataTable: function(periodFrom, periodTo, curryear) {
-			var path = "/ZCDS_PM_RMCM_DETAIL_ITEM(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "')/Results";
+			var path = "/ZCDS_PM_RMCM_DETAIL_ITEM(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_Year='" + curryear + "')/Results";
 			// ,P_Year='" + curryear + "'
 			// var path = "/ZCDS_PM_RMCM_DETAIL_ITEM";
 
@@ -102,15 +104,43 @@ sap.ui.define([
 		onSearchDetails: function() {
 			var periodFrom = this.getView().byId("periodFromComboBox");
 			var periodTo = this.getView().byId("periodToComboBox");
-			// var fiscalYear = this.getView().byId("FiscalYear").getValue();
+			var fiscalYear = this.getView().byId("FiscalYear");
 			
-			this.setDataTable(periodFrom.getSelectedKey(), 	periodTo.getSelectedKey(), "2020");
+			this.setDataTable(periodFrom.getSelectedKey(), 	periodTo.getSelectedKey(), fiscalYear.getSelectedKey());
 
 			var oSmartTableProjectsDetails = this.getView().byId("smartTableDetails");
 			oSmartTableProjectsDetails.rebindTable();
 		},
 
 		
+		setFields: function() {
+			// var oPeriodComboBox = this.getView().byId("PeriodComboBox");
+			var oYearComboBox = this.getView().byId("FiscalYear");
+
+			var today = new Date();
+			var thisYear = today.getFullYear();
+
+			var yearsData = {
+				"years": []
+			};
+			var i = 1;
+			var year = thisYear;
+
+			while (i < 20) {
+				if (year > "2016") {
+					yearsData.years.push({
+						"key": year
+					});
+					year -= 1;
+				}
+				i++;
+			}
+
+			var oYearsJson = new sap.ui.model.json.JSONModel();
+			oYearsJson.setData(yearsData);
+			oYearComboBox.setModel(oYearsJson, "paramYearModel");
+			oYearComboBox.setSelectedKey(thisYear);
+		},
 		
 
 		getContentDensityClass: function() {
