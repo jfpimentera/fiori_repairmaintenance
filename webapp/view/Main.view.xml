@@ -50,7 +50,6 @@
 							<smartFilterBar:ControlConfiguration key="ReportPeriodFrom" index="8" groupId="_BASIC" label="Period From" mandatory="mandatory">
 								<smartFilterBar:customControl>
 									<ComboBox id="periodFromComboBox" selectedKey="01">
-										<!--change="periodTypeChanged"-->
 											<core:Item key="01" text="January"/>
 											<core:Item key="02" text="February"/>
 											<core:Item key="03" text="March"/>
@@ -69,7 +68,6 @@
 							<smartFilterBar:ControlConfiguration key="ReportPeriodTo" index="9" groupId="_BASIC" label="Period To" mandatory="mandatory">
 								<smartFilterBar:customControl>
 									<ComboBox id="periodToComboBox" selectedKey="01">
-										<!--change="periodTypeChanged"-->
 												<core:Item key="01" text="January"/>
 												<core:Item key="02" text="February"/>
 												<core:Item key="03" text="March"/>
@@ -122,7 +120,6 @@
 												<smartTable:SmartTable id="smartTableDetails" smartFilterId="smartFilterBar" visible="true" entitySet="ZCDS_PM_RMCM_DETAIL_ITEMResults"
 													header="" tableType="Table" enableAutoBinding="true" useVariantManagement="false" dataReceived="onDataReceived"
 													persistencyKey="RMCMPFKey" showVariantManagement="false" useTablePersonalisation="true" showFullScreenButton="true">
-													<!--initiallyVisibleFields="Company,Year"-->
 													<smartTable:layoutData>
 														<FlexItemData growFactor="1" baseSize="0%"/>
 													</smartTable:layoutData>
