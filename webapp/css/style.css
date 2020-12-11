@@ -1,1 +1,174 @@
 /* Enter your custom styles here */
+
+:root {
+  --red: #DC0D0E;
+  --green: #3FA45B;
+  --blue: #1D7CA7;
+}
+
+.greyBackground {
+    background-color: #F5F5F7;
+}
+
+.groupTitle {
+	color: #ffffff !important;
+}
+
+.hideBorder{
+    border: 0px solid #D3D3D3;
+    }
+
+.noColumnBorder{
+    border-right: 0 !important;
+}
+.paddilize {
+	padding-top: 20px;
+}
+
+.tileStyle {
+    background-color: white;
+    border: 1px solid #D3D3D3;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.tileTitle {
+	font-size: .9rem;
+	font-weight: Bold;
+	/*font-family: Sans-Serif;*/
+}
+
+.marginTop15 {
+	margin-top: 15px;
+}
+
+.marginTop50 {
+	margin-top: 90px;
+}
+
+.tileStyleRatios {
+    background-color: white;
+    border: 1px solid #D3D3D3;
+    border-radius: 5px;
+    padding: 0px 0px 0px 10px;
+}
+
+
+.tileTitleBlue {
+	font-size: .9rem;
+	font-weight: Bold;
+	color: var(--blue);
+	/*font-family: Sans-Serif;*/
+}
+
+.tinyText {
+	font-size: 0.5em;
+	font-weight: Bold;
+	font-family: Sans-Serif;
+	color: var(--blue);
+}
+.prevBox {
+	padding-right: 40px;
+}
+.prevBox2 {
+	padding-right: 35px;
+}
+
+.totalsText {
+	font-size: 2.3em;
+	/*font-weight: Bold;*/
+	font-family: Sans-Serif;
+	color: var(--green);
+}
+.totalsTextN {
+	font-size: 2.3em;
+	/*font-weight: Bold;*/
+	font-family: Sans-Serif;
+	color: var(--red);
+}
+
+.infoText {
+	font-size: 14px;
+}
+
+.totalsCurrency {
+	font-size: .7rem;
+	font-family: Sans-Serif;
+}
+
+.marginTextNegative {
+	font-size: 1.4rem;
+	font-family: Sans-Serif;
+	color: var(--red);
+}
+
+.sapMListTbl .sapUiIcon:not(.sapMLIBImgNav):not(.sapMBtnIcon) {
+    font-size: .6rem;
+}
+
+.pnlStyle {
+    /*background-color: #2e75b5;*/
+}
+
+.sapMTB-Transparent-CTX>.sapMTitleTB.sapMTitleStyleAuto {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+/*Numeric Content Object Number*/
+
+.sapMNCValue {
+    font-size: 2rem;
+    font-family: Segoe UI;
+}
+
+.sapMNCScale {
+    font-size: .75rem;
+}
+
+.sapMNC {
+    height: 3.1rem;
+    width: 8rem;
+}
+
+.sapMObjectNumberText {
+	font-size: .96rem !important;
+
+}
+
+
+
+.sapMNCValue.Good, .sapMNCIndicator.Good, .sapMNCScale.Good {
+    color: var(--green);
+}
+
+.sapMObjectNumberStatusSuccess {
+	color: var(--green);
+}
+
+.sapMObjectNumberStatusError {
+	color: var(--red);
+}
+
+/*Icon*/
+.iconSizeS {
+    font-size: 0.5rem;
+}
+
+.iconSizeM {
+    font-size: 1.4rem;
+}
+
+/*Chart Container Title*/
+
+.sapMTB-Transparent-CTX>.sapMTitleTB.sapMTitleStyleAuto {
+    font-size: .9rem;
+}
+
+.sapMTB-Transparent-CTX.sapMTB {
+    padding-left: 0;
+}
+
+.sapMListTblCell {
+    border-left: .5px solid #ccc;
+}

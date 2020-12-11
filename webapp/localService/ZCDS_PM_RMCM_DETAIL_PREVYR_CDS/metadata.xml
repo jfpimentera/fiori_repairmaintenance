@@ -1,0 +1,223 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:Reference
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="./IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='FIORI_PGW')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS" xml:lang="en" sap:schema-version="1">
+            <EntityType Name="ZCDS_PM_RMCM_DETAIL_PREVYRResult" sap:semantics="aggregate" sap:label="RMCM Detailed Items with Previous Year" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" Nullable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CompanyCode" Type="Edm.String" MaxLength="4" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Company Code" sap:value-list="standard"/>
+                <Property Name="FiscalYear" Type="Edm.String" MaxLength="4" sap:aggregation-role="dimension" sap:display-format="NonNegative" sap:label="Year" sap:quickinfo="Fiscal Year"/>
+                <Property Name="Period" Type="Edm.String" MaxLength="3" sap:aggregation-role="dimension" sap:display-format="NonNegative" sap:label="Period" sap:quickinfo="Posting Period"/>
+                <Property Name="GLAccount" Type="Edm.String" MaxLength="10" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="GL Account" sap:quickinfo="Account Number" sap:value-list="standard"/>
+                <Property Name="PostingDate" Type="Edm.DateTime" Precision="0" sap:aggregation-role="dimension" sap:display-format="Date" sap:label="Posting Date" sap:quickinfo="Posting Date in the Document"/>
+                <Property Name="GLAccountName" Type="Edm.String" MaxLength="20" sap:aggregation-role="dimension" sap:label="GL Account Name" sap:quickinfo="G/L account short text"/>
+                <Property Name="Amount" Type="Edm.Decimal" Precision="12" Scale="2" sap:aggregation-role="measure" sap:label="Amount‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎ ‎‏‏‎ ‎‏‏‎ ‎" sap:filterable="false"/>
+                <Property Name="Currency" Type="Edm.String" MaxLength="5" sap:aggregation-role="dimension" sap:label="Currency" sap:quickinfo="Company Code Currency" sap:semantics="currency-code"/>
+                <Property Name="OrderNo" Type="Edm.String" MaxLength="12" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Order No" sap:quickinfo="Order Number" sap:value-list="standard"/>
+                <Property Name="OrderDesc" Type="Edm.String" MaxLength="40" sap:aggregation-role="dimension" sap:label="Order Description" sap:quickinfo="Short Text"/>
+                <Property Name="OrderType" Type="Edm.String" MaxLength="4" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Order Type" sap:value-list="standard"/>
+                <Property Name="ordertypename" Type="Edm.String" MaxLength="40" sap:aggregation-role="dimension" sap:label="Order Type Name" sap:quickinfo="Description"/>
+                <Property Name="EquipName" Type="Edm.String" MaxLength="40" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Equipment Name" sap:quickinfo="Equipment description in capital letters"/>
+                <Property Name="FuncLocName" Type="Edm.String" MaxLength="40" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Functional Location Name" sap:quickinfo="Description of functional location in capital letters"/>
+                <Property Name="MatNo" Type="Edm.String" MaxLength="40" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Material No" sap:quickinfo="Material Number"/>
+                <Property Name="MatDesc" Type="Edm.String" MaxLength="40" sap:aggregation-role="dimension" sap:label="Material Description" sap:quickinfo="Material description"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Precision="12" Scale="2" sap:aggregation-role="dimension" sap:label="Quantity ‎‏‏‎ ‎‏‏‎ ‎"/>
+                <Property Name="UOM" Type="Edm.String" MaxLength="3" sap:aggregation-role="dimension" sap:label="UoM" sap:quickinfo="Base Unit of Measure" sap:semantics="unit-of-measure"/>
+                <Property Name="CompanyName" Type="Edm.String" MaxLength="25" sap:aggregation-role="dimension" sap:label="Company Name" sap:quickinfo="Name of Company Code or Company"/>
+                <Property Name="Equip" Type="Edm.String" MaxLength="18" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Equipment" sap:quickinfo="Equipment Number"/>
+                <Property Name="FuncLoc" Type="Edm.String" MaxLength="40" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Functional Location"/>
+                <Property Name="CostCenter" Type="Edm.String" MaxLength="10" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Cost Center" sap:value-list="standard"/>
+                <Property Name="costcentername" Type="Edm.String" MaxLength="20" sap:aggregation-role="dimension" sap:label="Cost Center Name" sap:quickinfo="General Name"/>
+                <Property Name="GL_Label1" Type="Edm.String" MaxLength="20" sap:aggregation-role="dimension" sap:display-format="UpperCase"/>
+                <Property Name="GL_Label2" Type="Edm.String" MaxLength="14" sap:aggregation-role="dimension" sap:display-format="UpperCase"/>
+                <Property Name="ProfitCenter" Type="Edm.String" MaxLength="10" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Profit Center"/>
+                <Property Name="profitcentername" Type="Edm.String" MaxLength="20" sap:aggregation-role="dimension" sap:label="Profit Center Name" sap:quickinfo="General Name"/>
+                <Property Name="FIDocNo" Type="Edm.String" MaxLength="10" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="FI Doc No" sap:quickinfo="Accounting Document Number"/>
+                <Property Name="DocType" Type="Edm.String" MaxLength="2" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Doc Type" sap:quickinfo="Document type"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="12" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Created By" sap:quickinfo="User Name"/>
+                <NavigationProperty Name="Parameters" Relationship="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.assoc_C6D8049FD07FC9D9B7F724660B609D71" FromRole="ToRole_assoc_C6D8049FD07FC9D9B7F724660B609D71" ToRole="FromRole_assoc_C6D8049FD07FC9D9B7F724660B609D71" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ZCDS_PM_RMCM_DETAIL_PREVYRParameters" sap:semantics="parameters" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="P_PeriodFrom"/>
+                    <PropertyRef Name="P_PeriodTo"/>
+                    <PropertyRef Name="P_KeyDate"/>
+                </Key>
+                <Property Name="P_PeriodFrom" Type="Edm.String" Nullable="false" DefaultValue="001" MaxLength="3" sap:display-format="NonNegative" sap:parameter="mandatory" sap:label="Numeric value" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="P_PeriodTo" Type="Edm.String" Nullable="false" MaxLength="3" sap:display-format="NonNegative" sap:parameter="mandatory" sap:label="Numeric value" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="P_KeyDate" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="UpperCase" sap:parameter="mandatory" sap:label="CHAR08" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="Results" Relationship="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.assoc_C6D8049FD07FC9D9B7F724660B609D71" FromRole="FromRole_assoc_C6D8049FD07FC9D9B7F724660B609D71" ToRole="ToRole_assoc_C6D8049FD07FC9D9B7F724660B609D71"/>
+            </EntityType>
+            <EntityType Name="ZCDS_PM_SH_COSTCENTERType" sap:label="Cost Center Search Help" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="CostCenter"/>
+                </Key>
+                <Property Name="CostCenter" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:text="CostCenterName" sap:label="Cost Center"/>
+                <Property Name="CostCenterName" Type="Edm.String" MaxLength="40" sap:label="Cost Center Name" sap:quickinfo="Description"/>
+            </EntityType>
+            <EntityType Name="ZCDS_PM_SH_GLType" sap:label="GL Account Search Help" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="GLAccount"/>
+                </Key>
+                <Property Name="GLAccount" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:text="GLAccountName" sap:label="G/L Account" sap:quickinfo="G/L Account Number"/>
+                <Property Name="GLAccountName" Type="Edm.String" MaxLength="50" sap:label="GL Account Name" sap:quickinfo="G/L Account Long Text"/>
+            </EntityType>
+            <EntityType Name="ZCDS_PM_SH_ORDERNOType" sap:label="Order Number Search Help" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="OrderNo"/>
+                </Key>
+                <Property Name="OrderNo" Type="Edm.String" Nullable="false" MaxLength="12" sap:display-format="UpperCase" sap:text="OrderNoName" sap:label="Order" sap:quickinfo="Order Number"/>
+                <Property Name="OrderNoName" Type="Edm.String" MaxLength="40" sap:label="Order Number Desc" sap:quickinfo="Description"/>
+            </EntityType>
+            <EntityType Name="ZCDS_PM_SH_ORDERTYPEType" sap:label="Order Type Search Help" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="OrderType"/>
+                </Key>
+                <Property Name="OrderType" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:text="OrderTypeName" sap:label="Order Type"/>
+                <Property Name="OrderTypeName" Type="Edm.String" MaxLength="40" sap:label="Order Type Name" sap:quickinfo="Short Text"/>
+            </EntityType>
+            <EntityType Name="ZCDS_SH_BUKRSType" sap:label="Company Code Search Help" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="CompanyCode"/>
+                </Key>
+                <Property Name="CompanyCode" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:text="CompanyName" sap:label="Company Code"/>
+                <Property Name="CompanyName" Type="Edm.String" MaxLength="25" sap:label="Company Name" sap:quickinfo="Name of Company Code or Company"/>
+            </EntityType>
+            <Association Name="assoc_C6D8049FD07FC9D9B7F724660B609D71" sap:content-version="1">
+                <End Type="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.ZCDS_PM_RMCM_DETAIL_PREVYRParameters" Multiplicity="1" Role="FromRole_assoc_C6D8049FD07FC9D9B7F724660B609D71"/>
+                <End Type="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.ZCDS_PM_RMCM_DETAIL_PREVYRResult" Multiplicity="*" Role="ToRole_assoc_C6D8049FD07FC9D9B7F724660B609D71"/>
+            </Association>
+            <EntityContainer Name="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="ZCDS_PM_RMCM_DETAIL_PREVYRResults" EntityType="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.ZCDS_PM_RMCM_DETAIL_PREVYRResult" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCDS_PM_RMCM_DETAIL_PREVYR" EntityType="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.ZCDS_PM_RMCM_DETAIL_PREVYRParameters" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCDS_PM_SH_COSTCENTER" EntityType="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.ZCDS_PM_SH_COSTCENTERType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCDS_PM_SH_GL" EntityType="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.ZCDS_PM_SH_GLType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCDS_PM_SH_ORDERNO" EntityType="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.ZCDS_PM_SH_ORDERNOType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCDS_PM_SH_ORDERTYPE" EntityType="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.ZCDS_PM_SH_ORDERTYPEType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCDS_SH_BUKRS" EntityType="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.ZCDS_SH_BUKRSType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <AssociationSet Name="assoc_C6D8049FD07FC9D9B7F724660B609D71" Association="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.assoc_C6D8049FD07FC9D9B7F724660B609D71" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ZCDS_PM_RMCM_DETAIL_PREVYR" Role="FromRole_assoc_C6D8049FD07FC9D9B7F724660B609D71"/>
+                    <End EntitySet="ZCDS_PM_RMCM_DETAIL_PREVYRResults" Role="ToRole_assoc_C6D8049FD07FC9D9B7F724660B609D71"/>
+                </AssociationSet>
+            </EntityContainer>
+            <Annotations
+                xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.ZCDS_PM_RMCM_DETAIL_PREVYRResult/CompanyCode">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Company Code Search Help"/>
+                        <PropertyValue Property="CollectionPath" String="ZCDS_SH_BUKRS"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="CompanyCode"/>
+                                    <PropertyValue Property="ValueListProperty" String="CompanyCode"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="CompanyName"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations
+                xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.ZCDS_PM_RMCM_DETAIL_PREVYRResult/GLAccount">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="GL Account Search Help"/>
+                        <PropertyValue Property="CollectionPath" String="ZCDS_PM_SH_GL"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="GLAccount"/>
+                                    <PropertyValue Property="ValueListProperty" String="GLAccount"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="GLAccountName"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations
+                xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.ZCDS_PM_RMCM_DETAIL_PREVYRResult/OrderNo">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Order Number Search Help"/>
+                        <PropertyValue Property="CollectionPath" String="ZCDS_PM_SH_ORDERNO"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="OrderNo"/>
+                                    <PropertyValue Property="ValueListProperty" String="OrderNo"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="OrderNoName"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations
+                xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.ZCDS_PM_RMCM_DETAIL_PREVYRResult/OrderType">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Order Type Search Help"/>
+                        <PropertyValue Property="CollectionPath" String="ZCDS_PM_SH_ORDERTYPE"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="OrderType"/>
+                                    <PropertyValue Property="ValueListProperty" String="OrderType"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="OrderTypeName"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations
+                xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZCDS_PM_RMCM_DETAIL_PREVYR_CDS.ZCDS_PM_RMCM_DETAIL_PREVYRResult/CostCenter">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Cost Center Search Help"/>
+                        <PropertyValue Property="CollectionPath" String="ZCDS_PM_SH_COSTCENTER"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="CostCenter"/>
+                                    <PropertyValue Property="ValueListProperty" String="CostCenter"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="CostCenterName"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <atom:link
+                xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="./sap/ZCDS_PM_RMCM_DETAIL_PREVYR_CDS/$metadata"/>
+                <atom:link
+                    xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="./sap/ZCDS_PM_RMCM_DETAIL_PREVYR_CDS/$metadata"/>
+                </Schema>
+            </edmx:DataServices>
+        </edmx:Edmx>

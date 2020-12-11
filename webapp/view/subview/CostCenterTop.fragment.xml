@@ -1,0 +1,45 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:com="sap.suite.ui.commons"
+	xmlns:viz="sap.viz.ui5.controls" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:viz.data="sap.viz.ui5.data">
+	
+<!--Top R&M by Cost Center-->
+						<Hbox id="TOPCostCenter" class="tileStyle" height="100%" width="100%">
+							<layoutData>
+								<layout:GridData span="L12 M12 S12"/>
+							</layoutData>
+							<VBox width="100%">
+								<com:ChartContainer showFullScreen="true" showPersonalization="false" autoAdjustHeight="false" title="{i18n>rmTopCostCenter}"
+									showLegendButton="false" showLegend="false" showZoom="false">
+									<com:content>
+										<com:ChartContainerContent icon="sap-icon://line-chart">
+											<com:content>
+												
+												
+												<viz:VizFrame id="TOPCostCenterFrame" uiConfig="{applicationSet:'fiori'}" width="100%" height="250px" vizType='column'>
+													<viz:dataset>
+														<viz.data:FlattenedDataset data="{TOPCostCenterModel>/results}">
+															<viz.data:dimensions>
+																<viz.data:DimensionDefinition name="Cost Center" value="{TOPCostCenterModel>CostCenter}" displayValue="{TOPCostCenterModel>costcentername}"/>
+																<!--<viz.data:DimensionDefinition name="Type" value="{TOPCostCenterModel>GL_Label1}"/>-->
+															</viz.data:dimensions>
+															<viz.data:measures>
+																<viz.data:MeasureDefinition name="Cost" value="{TOPCostCenterModel>Amount}"/>
+															</viz.data:measures>
+														</viz.data:FlattenedDataset>
+													</viz:dataset>
+													<viz:feeds>
+														<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Cost"/>
+														<viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Cost Center"/>
+														<!--<viz.feeds:FeedItem uid="color" type="Dimension" values="Type"/>-->
+													</viz:feeds>
+												</viz:VizFrame>
+												
+												
+											</com:content>
+										</com:ChartContainerContent>
+									</com:content>
+								</com:ChartContainer>
+							</VBox>
+						</Hbox>
+						
+	
+</core:FragmentDefinition>

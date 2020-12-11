@@ -6,135 +6,195 @@
 		<pages>
 			<Page title="Repair Maintenance Cost Monitoring" showHeader='false'>
 				<content>
-						<!--Details Smart Filter-->
-					<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZCDS_PM_RMCM_DETAIL_ITEMResults" search="onSearchDetails" persistencyKey="FilterDKey" class="sapMPageBgStandard" liveMode="true">
-												
-						<smartFilterBar:controlConfiguration>
-							<smartFilterBar:ControlConfiguration key="CompanyCode" index="1" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" label="Company">
-								<smartFilterBar:defaultFilterValues>
-									<!--<smartFilterBar:SelectOption operator="EQ" low="2000"></smartFilterBar:SelectOption>-->
-									<!--<smartFilterBar:SelectOption operator="EQ" low="5100"></smartFilterBar:SelectOption>-->
-								</smartFilterBar:defaultFilterValues>
-							</smartFilterBar:ControlConfiguration>
-						</smartFilterBar:controlConfiguration>
-						
-						<smartFilterBar:controlConfiguration>
-							<smartFilterBar:ControlConfiguration key="GLAccount" index="2" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" />
-						</smartFilterBar:controlConfiguration>
-						
-						<smartFilterBar:controlConfiguration>
-							<smartFilterBar:ControlConfiguration key="CostCenter" index="3" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" />
-						</smartFilterBar:controlConfiguration>
-						
-						
-						<smartFilterBar:controlConfiguration>
-							<smartFilterBar:ControlConfiguration key="OrderType" index="4" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" />
-						</smartFilterBar:controlConfiguration>
-						
-						<smartFilterBar:controlConfiguration>
-							<smartFilterBar:ControlConfiguration key="OrderNo" index="5" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" />
-						</smartFilterBar:controlConfiguration>
-						
-						
-						<smartFilterBar:controlConfiguration>
-							<smartFilterBar:ControlConfiguration key="Equip" index="6" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" />
-						</smartFilterBar:controlConfiguration>
-						
-						<smartFilterBar:controlConfiguration>
-							<smartFilterBar:ControlConfiguration key="FuncLoc" index="7" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" />
-						</smartFilterBar:controlConfiguration>
-						
-						
-						
-						<smartFilterBar:controlConfiguration>
-							<smartFilterBar:ControlConfiguration key="ReportPeriodFrom" index="8" groupId="_BASIC" label="Period From" mandatory="mandatory">
-								<smartFilterBar:customControl>
-									<ComboBox id="periodFromComboBox" selectedKey="01">
-											<core:Item key="01" text="January"/>
-											<core:Item key="02" text="February"/>
-											<core:Item key="03" text="March"/>
-											<core:Item key="04" text="April"/>
-											<core:Item key="05" text="May"/>
-											<core:Item key="6" text="June"/>
-											<core:Item key="07" text="July"/>
-											<core:Item key="08" text="August"/>
-											<core:Item key="09" text="September"/>
-											<core:Item key="10" text="October"/>
-											<core:Item key="11" text="November"/>
-											<core:Item key="12" text="December"/>
-									</ComboBox>
-								</smartFilterBar:customControl>
-							</smartFilterBar:ControlConfiguration>
-							<smartFilterBar:ControlConfiguration key="ReportPeriodTo" index="9" groupId="_BASIC" label="Period To" mandatory="mandatory">
-								<smartFilterBar:customControl>
-									<ComboBox id="periodToComboBox" selectedKey="01">
-												<core:Item key="01" text="January"/>
-												<core:Item key="02" text="February"/>
-												<core:Item key="03" text="March"/>
-												<core:Item key="04" text="April"/>
-												<core:Item key="05" text="May"/>
-												<core:Item key="06" text="June"/>
-												<core:Item key="7" text="July"/>
-												<core:Item key="08" text="August"/>
-												<core:Item key="09" text="September"/>
-												<core:Item key="10" text="October"/>
-												<core:Item key="11" text="November"/>
-												<core:Item key="12" text="December"/>
-									</ComboBox>
-								</smartFilterBar:customControl>
-							</smartFilterBar:ControlConfiguration>
-						</smartFilterBar:controlConfiguration>
-						 
-						
-						<smartFilterBar:controlConfiguration>
-							<smartFilterBar:ControlConfiguration key="FiscalYear" index="10" groupId="_BASIC" label="Year" mandatory="mandatory">
-								<smartFilterBar:customControl>
-									<ComboBox id="FiscalYear" selectedKey="paramYearModel/years>key" items="{paramYearModel>/years}" >
-										<core:Item key="{paramYearModel>key}" text="{paramYearModel>key}"/>
-									</ComboBox>
-								</smartFilterBar:customControl>
-							</smartFilterBar:ControlConfiguration>
-						</smartFilterBar:controlConfiguration>
-						
-						<smartFilterBar:layoutData>
-							<FlexItemData shrinkFactor="0"/>
-						</smartFilterBar:layoutData>  				
-					</smartFilterBar:SmartFilterBar>
-					<!--//Details Smart Filter-->
 					
+			<!--Details Smart Filter-->
+			<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZCDS_PM_RMCM_DETAIL_ITEMResults" search="onSearchDetails" persistencyKey="FilterDKey" class="sapMPageBgStandard" liveMode="true">
+										
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration key="CompanyCode" index="1" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" label="Company">
+						<smartFilterBar:defaultFilterValues>
+							<!--<smartFilterBar:SelectOption operator="EQ" low="2000"></smartFilterBar:SelectOption>-->
+							<!--<smartFilterBar:SelectOption operator="EQ" low="5100"></smartFilterBar:SelectOption>-->
+						</smartFilterBar:defaultFilterValues>
+					</smartFilterBar:ControlConfiguration>
+				</smartFilterBar:controlConfiguration>
+				
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration key="GLAccount" index="2" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" />
+				</smartFilterBar:controlConfiguration>
+				
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration key="ReportPeriodFrom" index="3" groupId="_BASIC" label="Period From" mandatory="mandatory">
+						<smartFilterBar:customControl>
+							<ComboBox id="periodFromComboBox" selectedKey="01">
+									<core:Item key="01" text="January"/>
+									<core:Item key="02" text="February"/>
+									<core:Item key="03" text="March"/>
+									<core:Item key="04" text="April"/>
+									<core:Item key="05" text="May"/>
+									<core:Item key="6" text="June"/>
+									<core:Item key="07" text="July"/>
+									<core:Item key="08" text="August"/>
+									<core:Item key="09" text="September"/>
+									<core:Item key="10" text="October"/>
+									<core:Item key="11" text="November"/>
+									<core:Item key="12" text="December"/>
+							</ComboBox>
+						</smartFilterBar:customControl>
+					</smartFilterBar:ControlConfiguration>
+					<smartFilterBar:ControlConfiguration key="ReportPeriodTo" index="4" groupId="_BASIC" label="Period To" mandatory="mandatory">
+						<smartFilterBar:customControl>
+							<ComboBox id="periodToComboBox" selectedKey="01">
+										<core:Item key="01" text="January"/>
+										<core:Item key="02" text="February"/>
+										<core:Item key="03" text="March"/>
+										<core:Item key="04" text="April"/>
+										<core:Item key="05" text="May"/>
+										<core:Item key="06" text="June"/>
+										<core:Item key="7" text="July"/>
+										<core:Item key="08" text="August"/>
+										<core:Item key="09" text="September"/>
+										<core:Item key="10" text="October"/>
+										<core:Item key="11" text="November"/>
+										<core:Item key="12" text="December"/>
+							</ComboBox>
+						</smartFilterBar:customControl>
+					</smartFilterBar:ControlConfiguration>
+				</smartFilterBar:controlConfiguration>
+				 
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration key="FiscalYear" index="5" groupId="_BASIC" label="Year" mandatory="mandatory">
+						<smartFilterBar:customControl>
+							<ComboBox id="FiscalYear" selectedKey="paramYearModel/years>key" items="{paramYearModel>/years}" >
+								<core:Item key="{paramYearModel>key}" text="{paramYearModel>key}"/>
+							</ComboBox>
+						</smartFilterBar:customControl>
+					</smartFilterBar:ControlConfiguration>
+				</smartFilterBar:controlConfiguration>
+				
+				
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration key="CostCenter" index="6" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" />
+				</smartFilterBar:controlConfiguration>
+				
+				
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration key="OrderType" index="7" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" />
+				</smartFilterBar:controlConfiguration>
+				
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration key="OrderNo" index="8" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" />
+				</smartFilterBar:controlConfiguration>
+				
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration key="Equip" index="9" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" />
+				</smartFilterBar:controlConfiguration>
+				
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration key="FuncLoc" index="10" groupId="_BASIC" preventInitialDataFetchInValueHelpDialog="false" />
+				</smartFilterBar:controlConfiguration>
+				
+				<smartFilterBar:layoutData>
+					<FlexItemData shrinkFactor="0"/>
+				</smartFilterBar:layoutData>  				
+			</smartFilterBar:SmartFilterBar>
+			<!--//Details Smart Filter-->
+			
+			<ScrollContainer height="100%" width="100%" vertical="true">
+				<layout:Grid id="Grid" defaultSpan="L12 M12 S12" hSpacing=".5" vSpacing=".5" class="sapUiTinyMarginTop">
+					<layout:content>
+					
+			
+												<!--<Text text="2020" class="totalsCurrency"/>-->
+												<Text text="{totalsModel>/results/0/Currency}" class="totalsCurrency"/>
+					<!--CHART-->
+					<layout:Grid defaultSpan="L12 M12 S12" hSpacing="0.5" vSpacing=".5" class="customBackground3">
+						<layout:content>
+												<viz:Popover id="RMTotalsPopOver"></viz:Popover>
+												<viz:Popover id="RMTotalsGLPopOver"></viz:Popover>
+												<viz:Popover id="RMTotalsGLMonthPopOver"></viz:Popover>
+							
+							<core:Fragment fragmentName="ZUI_PM_RM_COST_MONITORING.view.subview.RMTotals" type="XML"/>
+						</layout:content>
+					</layout:Grid>
+					
+					
+					<layout:Grid defaultSpan="L12 M12 S12" hSpacing="0.5" vSpacing=".5" class="customBackground3">
+						<layout:content>
+												<viz:Popover id="TOPOrderTypePopOver"></viz:Popover>
+												<viz:Popover id="TOPFuncLocPopOver"></viz:Popover>
+												<viz:Popover id="TOPEquipmentPopOver"></viz:Popover>
+							
+							<core:Fragment fragmentName="ZUI_PM_RM_COST_MONITORING.view.subview.PMTop" type="XML"/>
+						</layout:content>
+					</layout:Grid>
+					
+					
+					<layout:Grid defaultSpan="L12 M12 S12" hSpacing="0.5" vSpacing=".5" class="customBackground3">
+						<layout:content>
+												<viz:Popover id="TOPCostCenterPopOver"></viz:Popover>
+							
+							<core:Fragment fragmentName="ZUI_PM_RM_COST_MONITORING.view.subview.CostCenterTop" type="XML"/>
+						</layout:content>
+					</layout:Grid>
+					<!--CHART-->
+			
+			<!--Start Detail Table -->
 					<VBox fitContainer="true">
-										<layout:FixFlex id='detailsTableFixFlex' minFlexSize="500" class="customBackground sapUiNoMarginTop">
-											<layout:flexContent>
-												
-												<!--Smart Table-->
-												
-												<!--<smartTable:SmartTable id="smartTableDetails" smartFilterId="smartFilterBar" visible="true" header=""-->
-												<!--	tableType="ResponsiveTable" enableAutoBinding="true" useVariantManagement="false" persistencyKey="SCCRPFKey" showVariantManagement="false"-->
-												<!--	useTablePersonalisation="false" showFullScreenButton="true" width="100%" height="100%" demandPopin="false" class="customBackground4">-->
-												<!--	initiallyVisibleFields="CompanyCode">-->
-												<!--	<smartTable:layoutData>-->
-												<!--		<FlexItemData growFactor="1" baseSize="0%"/>-->
-												<!--	</smartTable:layoutData>-->
-												<!--</smartTable:SmartTable>-->
-												
-												<smartTable:SmartTable id="smartTableDetails" smartFilterId="smartFilterBar" visible="true" entitySet="ZCDS_PM_RMCM_DETAIL_ITEMResults"
-													header="" tableType="Table" enableAutoBinding="true" useVariantManagement="false" dataReceived="onDataReceived"
-													persistencyKey="RMCMPFKey" showVariantManagement="false" useTablePersonalisation="true" showFullScreenButton="true">
-													<smartTable:layoutData>
-														<FlexItemData growFactor="1" baseSize="0%"/>
-													</smartTable:layoutData>
-												</smartTable:SmartTable>
-												
-												
-												
-												
-												<!--//Smart Table-->
-												
-											</layout:flexContent>
-										</layout:FixFlex>
-									</VBox>
+						<layout:FixFlex id='detailsTableFixFlex' minFlexSize="450" class="customBackground sapUiTinyMarginTop">
+							<layout:flexContent>
+								<!--Smart Table-->
+								<smartTable:SmartTable id="smartTableDetails" smartFilterId="smartFilterBar" visible="true" entitySet="ZCDS_PM_RMCM_DETAIL_ITEMResults"
+									tableType="Table" enableAutoBinding="true" useVariantManagement="true" dataReceived="onDataReceived" 
+									persistencyKey="RMCMPFKey" showVariantManagement="false" useTablePersonalisation="true" showFullScreenButton="true"
+									header="{i18n>detailstable}" 
+									 >
+									<!--beforeExport="onExport" -->
+									<!--showFullScreenButton="false"-->
+									<!-- data:presentationVariantQualifier="DetailsTablePresentation"-->
+									<smartTable:layoutData>
+										<FlexItemData growFactor="1" baseSize="0%"/>
+									</smartTable:layoutData>
+									<!--<table:AnalyticalTable id="detailsTable" visibleRowCountMode="auto" numberOfExpandedLevels="1"/>-->
+														<table:AnalyticalTable id="detailsTable" title=""></table:AnalyticalTable>
+								</smartTable:SmartTable>
+								<!--//Smart Table-->
+							</layout:flexContent>
+						</layout:FixFlex>
+					</VBox>
+			<!--End Detail Table -->
+			
+			
+			<!--Start Detail Table -->
+			<!--		<VBox fitContainer="true">-->
+			<!--			<layout:FixFlex id='detailsTableFixFlex' minFlexSize="500" class="customBackground sapUiNoMarginTop">-->
+			<!--				<layout:flexContent>-->
+								<!--Smart Table-->
+			<!--					<smartTable:SmartTable id="smartTableDetails" smartFilterId="smartFilterBar" visible="true" entitySet="ZCDS_PM_RMCM_DETAIL_ITEMResults"-->
+			<!--						header="" tableType="Table" enableAutoBinding="true" useVariantManagement="true" dataReceived="onDataReceived" -->
+			<!--						persistencyKey="RMCMPFKey" showVariantManagement="true" useTablePersonalisation="true" showFullScreenButton="true"-->
+			<!--						>-->
+									<!--showFullScreenButton="false"-->
+									 <!--data:presentationVariantQualifier="DetailsTablePresentation"-->
+			<!--						<smartTable:layoutData>-->
+			<!--							<FlexItemData growFactor="1" baseSize="0%"/>-->
+			<!--						</smartTable:layoutData>-->
+									<!--<table:AnalyticalTable id="detailsTable" visibleRowCountMode="auto" numberOfExpandedLevels="1"/>-->
+			<!--					</smartTable:SmartTable>-->
+								<!--//Smart Table-->
+			<!--				</layout:flexContent>-->
+			<!--			</layout:FixFlex>-->
+			<!--		</VBox>-->
+			<!--End Detail Table -->
 					
 					
+					</layout:content>
+				</layout:Grid>
+			</ScrollContainer>
+			
+			
+			
+			
 				</content>
 			</Page>
 		</pages>

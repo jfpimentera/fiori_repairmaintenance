@@ -70,6 +70,12 @@
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="UOM"/>
 						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="FIDocNo"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="FILineNo"/>
+						</Record>
 					</Collection>
 				</Annotation>
 			</Annotations>

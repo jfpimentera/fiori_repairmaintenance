@@ -29,6 +29,30 @@
 				"settings": {
 					"localUri": "annotations/annotation.xml"
 				}
+			},
+			"ZCDS_PM_RMCM_DETAIL_PREVYR_CDS": {
+				"uri": "/sap/opu/odata/sap/ZCDS_PM_RMCM_DETAIL_PREVYR_CDS/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZCDS_PM_RMCM_DETAIL_PREVYR_CDS/metadata.xml"
+				}
+			},
+			"ZCDS_PM_RMCM_DETAIL_GROUP_CDS": {
+				"uri": "/sap/opu/odata/sap/ZCDS_PM_RMCM_DETAIL_GROUP_CDS/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZCDS_PM_RMCM_DETAIL_GROUP_CDS/metadata.xml"
+				}
+			},
+			"ZCDS_PM_RMCM_TOTALS_CDS": {
+				"uri": "/sap/opu/odata/sap/ZCDS_PM_RMCM_TOTALS_CDS/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZCDS_PM_RMCM_TOTALS_CDS/metadata.xml"
+				}
 			}
 		}
 	},
@@ -100,6 +124,36 @@
 				},
 				"dataSource": "ZCDS_PM_RMCM_DETAIL_ITEM_CDS",
 				"preload": true
+			},
+			"itemDetail_prevYR": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZCDS_PM_RMCM_DETAIL_PREVYR_CDS",
+				"preload": true
+			},
+			"itemDetail_Group": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZCDS_PM_RMCM_DETAIL_GROUP_CDS",
+				"preload": true
+			},
+			"itemDetail_Totals": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZCDS_PM_RMCM_TOTALS_CDS",
+				"preload": true
 			}
 		},
 		"resources": {
@@ -107,5 +161,9 @@
 				"uri": "css/style.css"
 			}]
 		}
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/zui5_pm_rmcm/webapp",
+		"_version": "1.1.0"
 	}
 }
