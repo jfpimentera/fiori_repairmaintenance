@@ -17,19 +17,20 @@
 								
 											<VBox  alignItems="Center" alignContent="End" width="100%" height="100%">
 												<!--<Text text="2020" class="totalsCurrency"/>-->
-												<Text text="{itemDetail_Totals>/results/0/Currency}" class="totalsCurrency"/>
+												<Text text="{totalsModel>/results/0/FiscalYear}" class="totalsCurrency"/>
 												
-												<!--<ObjectNumber number="{parts:[{path:'totalsModel>/results/0/NETPROFIT'}, {path:'totalsModel>/results/0/CURRENCY'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false, style: 'short'}}"/>-->
-											</VBox>
+												</VBox>
 											
 											<VBox width="100%" justifyContent="Center" alignItems="Center" class="sapUiTinyMarginTop">
-												<Text id="assText" text="150M" modelContextChange="setColorAss"/>
+												<Text id="assText" text="{parts:[{path:'totalsModel>/results/0/Amount'}, {path:'totalsModel>/results/0/Currency'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false, style: 'short'}}" modelContextChange="setColorAss"/>
+													<!--<ObjectNumber number="{parts:[{path:'totalsModel>/results/0/Amount'}, {path:'totalsModel>/results/0/Currency'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false, style: 'short'}}"/>-->
+										
 											</VBox>
 											
 											<!--<HBox class="sapUiTinyMarginTop"></HBox>-->
 											<HBox alignItems="Center" alignContent="End" width="100%" height="100%">
 												<VBox width="100%" alignItems="Center" justifyContent="Center">
-														<Text text="PHP" class="totalsCurrency"/>
+														<Text text="{totalsModel>/results/0/Currency}" class="totalsCurrency"/>
 														<!--<ObjectNumber number="PHP" class="totalsCurrency"/>-->
 												</VBox>
 											</HBox>
@@ -37,37 +38,30 @@
 							</VBox>
 										
 							<VBox width="60%">
-								
+								<VBox width="100%">
 								<com:ChartContainer showFullScreen="true" showPersonalization="false" autoAdjustHeight="false"
 									title="" showLegendButton="false" showZoom="false" showLegend="true">
-									<!--title="{i18n>rmTotals}" -->
 									<com:content>
 										<com:ChartContainerContent icon="sap-icon://line-chart">
 											<com:content>
 												
-										
-												<!--<HBox width="50%">-->
-													
-												<!--</HBox>-->
-												
-												<!--<HBox width="50%">-->
-												<!--</HBox>-->
-												
 								
-												<viz:VizFrame id="RMTotalsFrame" uiConfig="{applicationSet:'fiori'}" height="250px" vizType='100_stacked_column'>
+												<viz:VizFrame id="RMTotals_Stack" uiConfig="{applicationSet:'fiori'}" height="180px" vizType='stacked_column'>
 													<viz:dataset>
-														<viz.data:FlattenedDataset data="{RMTotalsModel>/results}">
+														<viz.data:FlattenedDataset data="{RMTotalsModel_Stack>/results}">
 															<viz.data:dimensions>
-																<viz.data:DimensionDefinition name="Year" value="{RMTotalsModel>FiscalYear}"/>
-																<viz.data:DimensionDefinition name="Type" value="{RMTotalsModel>GL_Label2}"/>
+																<viz.data:DimensionDefinition name="Year" value="{RMTotalsModel_Stack>FiscalYear}"/>
+																<viz.data:DimensionDefinition name="Type" value="{RMTotalsModel_Stack>GL_Label2}"/>
 															</viz.data:dimensions>
 															<viz.data:measures>
-																<viz.data:MeasureDefinition name="Amount" value="{RMTotalsModel>Amount}"/>
+																<viz.data:MeasureDefinition name="Amount" value="{RMTotalsModel_Stack>Amount}"/>
+																<!--<viz.data:MeasureDefinition name="Cost" value="{RMTotalsModel3>Amount}"/>-->
 															</viz.data:measures>
 														</viz.data:FlattenedDataset>
 													</viz:dataset>
 													<viz:feeds>
 														<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Amount"/>
+														<!--<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Cost"/>-->
 														<viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Year"/>
 														<viz.feeds:FeedItem uid="color" type="Dimension" values="Type"/>
 													</viz:feeds>
@@ -77,6 +71,72 @@
 										</com:ChartContainerContent>
 									</com:content>
 								</com:ChartContainer>
+								</VBox>
+								
+						<HBox height="100%" width="100%" alignItems="Start" class="padLeft">
+								<VBox width="100%" id="totPie1">
+								<!--<com:ChartContainer showFullScreen="true" showPersonalization="false" autoAdjustHeight="false"-->
+								<!--	title="" showLegendButton="true" showZoom="false" showLegend="true">-->
+								<!--	<com:content>-->
+								<!--		<com:ChartContainerContent icon="sap-icon://line-chart">-->
+								<!--			<com:content>-->
+												
+												<viz:VizFrame id="RMTotals_PieL" uiConfig="{applicationSet:'fiori'}" height="70px" width="100%" vizType='pie'>
+													<viz:dataset>
+														<viz.data:FlattenedDataset data="{RMTotalsModel_PieL>/results}">
+															<viz.data:dimensions>
+												<!--				<viz.data:DimensionDefinition name="Year" value="{RMTotalsModel>FiscalYear}"/>-->
+																<viz.data:DimensionDefinition name="Type" value="{RMTotalsModel_PieL>GL_Label2}"/>
+															</viz.data:dimensions>
+															<viz.data:measures>
+																<viz.data:MeasureDefinition name="Amount" value="{RMTotalsModel_PieL>Amount}"/>
+															</viz.data:measures>
+														</viz.data:FlattenedDataset>
+													</viz:dataset>
+													<viz:feeds>
+															<viz.feeds:FeedItem uid="size" type="Measure" values="Amount"/>
+															<viz.feeds:FeedItem uid="color" type="Dimension" values="Type"/>
+													</viz:feeds>
+												</viz:VizFrame>
+												
+								<!--			</com:content>-->
+								<!--		</com:ChartContainerContent>-->
+								<!--	</com:content>-->
+								<!--</com:ChartContainer>-->
+								</VBox>
+								<VBox width="100%" id="totPie2">
+								<!--<com:ChartContainer showFullScreen="true" showPersonalization="false" autoAdjustHeight="false"-->
+								<!--	title="" showLegendButton="true" showZoom="false" showLegend="true">-->
+								<!--	<com:content>-->
+								<!--		<com:ChartContainerContent icon="sap-icon://line-chart">-->
+								<!--			<com:content>-->
+												
+												<viz:VizFrame id="RMTotals_PieR" uiConfig="{applicationSet:'fiori'}" height="70px" width="100%" vizType='pie'>
+													<viz:dataset>
+														<viz.data:FlattenedDataset data="{RMTotalsModel_PieR>/results}">
+															<viz.data:dimensions>
+												<!--				<viz.data:DimensionDefinition name="Year" value="{RMTotalsModel2>FiscalYear}"/>-->
+																<viz.data:DimensionDefinition name="Type" value="{RMTotalsModel_PieR>GL_Label2}"/>
+															</viz.data:dimensions>
+															<viz.data:measures>
+																<viz.data:MeasureDefinition name="Amount" value="{RMTotalsModel_PieR>Amount}"/>
+															</viz.data:measures>
+														</viz.data:FlattenedDataset>
+													</viz:dataset>
+													<viz:feeds>
+															<viz.feeds:FeedItem uid="size" type="Measure" values="Amount"/>
+															<viz.feeds:FeedItem uid="color" type="Dimension" values="Type"/>
+													</viz:feeds>
+												</viz:VizFrame>
+								
+								<!--			</com:content>-->
+								<!--		</com:ChartContainerContent>-->
+								<!--	</com:content>-->
+								<!--</com:ChartContainer>-->
+								</VBox>
+								
+							</HBox>
+								
 							</VBox>
 						</Hbox>
 						

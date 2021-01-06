@@ -1,0 +1,80 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:Reference
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="./IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='FIORI_PGW')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZCDS_PM_RMCM_ORDERTYPE_CDS" xml:lang="en" sap:schema-version="1">
+            <EntityType Name="ZCDS_PM_RMCM_ORDERTYPEResult" sap:semantics="aggregate" sap:label="Repair and Maintenance per Order Type" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" Nullable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OrderType" Type="Edm.String" MaxLength="4" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Order Type" sap:value-list="standard"/>
+                <Property Name="FiscalYear" Type="Edm.String" MaxLength="4" sap:aggregation-role="dimension" sap:display-format="NonNegative" sap:label="Year" sap:quickinfo="Fiscal Year"/>
+                <Property Name="Amount" Type="Edm.Decimal" Precision="12" Scale="2" sap:aggregation-role="measure" sap:label="Amount‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎ ‎‏‏‎ ‎‏‏‎ ‎" sap:filterable="false"/>
+                <NavigationProperty Name="Parameters" Relationship="ZCDS_PM_RMCM_ORDERTYPE_CDS.assoc_FB5295F6EF2F9E215301AB2B3C4B13AA" FromRole="ToRole_assoc_FB5295F6EF2F9E215301AB2B3C4B13AA" ToRole="FromRole_assoc_FB5295F6EF2F9E215301AB2B3C4B13AA" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ZCDS_PM_RMCM_ORDERTYPEParameters" sap:semantics="parameters" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="P_PeriodFrom"/>
+                    <PropertyRef Name="P_PeriodTo"/>
+                    <PropertyRef Name="P_KeyDate"/>
+                </Key>
+                <Property Name="P_PeriodFrom" Type="Edm.String" Nullable="false" DefaultValue="001" MaxLength="3" sap:display-format="NonNegative" sap:parameter="mandatory" sap:label="Numeric value" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="P_PeriodTo" Type="Edm.String" Nullable="false" MaxLength="3" sap:display-format="NonNegative" sap:parameter="mandatory" sap:label="Numeric value" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="P_KeyDate" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="UpperCase" sap:parameter="mandatory" sap:label="CHAR08" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="Results" Relationship="ZCDS_PM_RMCM_ORDERTYPE_CDS.assoc_FB5295F6EF2F9E215301AB2B3C4B13AA" FromRole="FromRole_assoc_FB5295F6EF2F9E215301AB2B3C4B13AA" ToRole="ToRole_assoc_FB5295F6EF2F9E215301AB2B3C4B13AA"/>
+            </EntityType>
+            <EntityType Name="ZCDS_PM_SH_ORDERTYPEType" sap:label="Order Type Search Help" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="OrderType"/>
+                </Key>
+                <Property Name="OrderType" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:text="OrderTypeName" sap:label="Order Type"/>
+                <Property Name="OrderTypeName" Type="Edm.String" MaxLength="40" sap:label="Order Type Name" sap:quickinfo="Short Text"/>
+            </EntityType>
+            <Association Name="assoc_FB5295F6EF2F9E215301AB2B3C4B13AA" sap:content-version="1">
+                <End Type="ZCDS_PM_RMCM_ORDERTYPE_CDS.ZCDS_PM_RMCM_ORDERTYPEParameters" Multiplicity="1" Role="FromRole_assoc_FB5295F6EF2F9E215301AB2B3C4B13AA"/>
+                <End Type="ZCDS_PM_RMCM_ORDERTYPE_CDS.ZCDS_PM_RMCM_ORDERTYPEResult" Multiplicity="*" Role="ToRole_assoc_FB5295F6EF2F9E215301AB2B3C4B13AA"/>
+            </Association>
+            <EntityContainer Name="ZCDS_PM_RMCM_ORDERTYPE_CDS_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="ZCDS_PM_RMCM_ORDERTYPEResults" EntityType="ZCDS_PM_RMCM_ORDERTYPE_CDS.ZCDS_PM_RMCM_ORDERTYPEResult" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCDS_PM_RMCM_ORDERTYPE" EntityType="ZCDS_PM_RMCM_ORDERTYPE_CDS.ZCDS_PM_RMCM_ORDERTYPEParameters" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCDS_PM_SH_ORDERTYPE" EntityType="ZCDS_PM_RMCM_ORDERTYPE_CDS.ZCDS_PM_SH_ORDERTYPEType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <AssociationSet Name="assoc_FB5295F6EF2F9E215301AB2B3C4B13AA" Association="ZCDS_PM_RMCM_ORDERTYPE_CDS.assoc_FB5295F6EF2F9E215301AB2B3C4B13AA" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ZCDS_PM_RMCM_ORDERTYPE" Role="FromRole_assoc_FB5295F6EF2F9E215301AB2B3C4B13AA"/>
+                    <End EntitySet="ZCDS_PM_RMCM_ORDERTYPEResults" Role="ToRole_assoc_FB5295F6EF2F9E215301AB2B3C4B13AA"/>
+                </AssociationSet>
+            </EntityContainer>
+            <Annotations
+                xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZCDS_PM_RMCM_ORDERTYPE_CDS.ZCDS_PM_RMCM_ORDERTYPEResult/OrderType">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Order Type Search Help"/>
+                        <PropertyValue Property="CollectionPath" String="ZCDS_PM_SH_ORDERTYPE"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="OrderType"/>
+                                    <PropertyValue Property="ValueListProperty" String="OrderType"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="OrderTypeName"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <atom:link
+                xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="./sap/ZCDS_PM_RMCM_ORDERTYPE_CDS/$metadata"/>
+                <atom:link
+                    xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="./sap/ZCDS_PM_RMCM_ORDERTYPE_CDS/$metadata"/>
+                </Schema>
+            </edmx:DataServices>
+        </edmx:Edmx>

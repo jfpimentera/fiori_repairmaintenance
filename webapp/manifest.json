@@ -20,7 +20,9 @@
 				"settings": {
 					"odataVersion": "2.0",
 					"localUri": "localService/metadata.xml",
-					"annotations": ["annotation"]
+					"annotations": [
+						"annotation"
+					]
 				}
 			},
 			"annotation": {
@@ -53,6 +55,46 @@
 					"odataVersion": "2.0",
 					"localUri": "localService/ZCDS_PM_RMCM_TOTALS_CDS/metadata.xml"
 				}
+			},
+			"ZCDS_PM_RMCM_ORDERTYPE_CDS": {
+				"uri": "/sap/opu/odata/sap/ZCDS_PM_RMCM_ORDERTYPE_CDS/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZCDS_PM_RMCM_ORDERTYPE_CDS/metadata.xml"
+				}
+			},
+			"ZCDS_PM_RMCM_DETAIL_ITEM2_CDS": {
+				"uri": "/sap/opu/odata/sap/ZCDS_PM_RMCM_DETAIL_ITEM2_CDS/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZCDS_PM_RMCM_DETAIL_ITEM2_CDS/metadata.xml"
+				}
+			},
+			"ZCDS_PM_RMCM_TOTALS_PM_CDS": {
+				"uri": "/sap/opu/odata/sap/ZCDS_PM_RMCM_TOTALS_PM_CDS/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZCDS_PM_RMCM_TOTALS_PM_CDS/metadata.xml"
+				}
+			},
+			"ZCDS_PM_RMCM_DETAIL_ITEM3_CDS": {
+				"uri": "/sap/opu/odata/sap/ZCDS_PM_RMCM_DETAIL_ITEM3_CDS/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZCDS_PM_RMCM_DETAIL_ITEM3_CDS/metadata.xml"
+				}
+			},
+			"ZCDS_PM_RMCM_DETAIL_ITEM4_CDS": {
+				"uri": "/sap/opu/odata/sap/ZCDS_PM_RMCM_DETAIL_ITEM4_CDS/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZCDS_PM_RMCM_DETAIL_ITEM4_CDS/metadata.xml"
+				}
 			}
 		}
 	},
@@ -71,7 +113,10 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": ["sap_hcb", "sap_belize"]
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_belize"
+		]
 	},
 	"sap.ui5": {
 		"rootView": {
@@ -81,13 +126,16 @@
 		"dependencies": {
 			"minUI5Version": "1.30.0",
 			"libs": {
-				"sap.ui.core": {},
+				"sap.collaboration": {},
 				"sap.m": {},
+				"sap.ui.comp": {},
+				"sap.ui.core": {},
 				"sap.ui.layout": {},
 				"sap.ushell": {},
-				"sap.collaboration": {},
-				"sap.ui.comp": {},
-				"sap.uxap": {}
+				"sap.uxap": {},
+				"sap.viz": {
+					"minVersion": ""
+				}
 			}
 		},
 		"contentDensities": {
@@ -154,12 +202,64 @@
 				},
 				"dataSource": "ZCDS_PM_RMCM_TOTALS_CDS",
 				"preload": true
+			},
+			"itemDetail_OrderType": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZCDS_PM_RMCM_ORDERTYPE_CDS",
+				"preload": true
+			},
+			"itemDetail2": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZCDS_PM_RMCM_DETAIL_ITEM2_CDS",
+				"preload": true
+			},
+			"itemDetail_TotalsPM": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZCDS_PM_RMCM_TOTALS_PM_CDS",
+				"preload": true
+			},
+			"itemDetail3": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZCDS_PM_RMCM_DETAIL_ITEM3_CDS",
+				"preload": true
+			},
+			"itemDetail4": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZCDS_PM_RMCM_DETAIL_ITEM4_CDS",
+				"preload": true
 			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		}
 	},
 	"sap.platform.abap": {

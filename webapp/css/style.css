@@ -24,6 +24,9 @@
 .paddilize {
 	padding-top: 20px;
 }
+.padLeft {
+	padding-left: 30px;
+}
 
 .tileStyle {
     background-color: white;
@@ -43,7 +46,7 @@
 }
 
 .marginTop50 {
-	margin-top: 90px;
+	margin-top: 130px;
 }
 
 .tileStyleRatios {

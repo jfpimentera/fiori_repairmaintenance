@@ -106,11 +106,13 @@
 					
 			
 												<!--<Text text="2020" class="totalsCurrency"/>-->
-												<Text text="{totalsModel>/results/0/Currency}" class="totalsCurrency"/>
+												<!--<Text text="{totalsModel>/results/0/Currency}" class="totalsCurrency"/>-->
 					<!--CHART-->
 					<layout:Grid defaultSpan="L12 M12 S12" hSpacing="0.5" vSpacing=".5" class="customBackground3">
 						<layout:content>
 												<viz:Popover id="RMTotalsPopOver"></viz:Popover>
+												<viz:Popover id="RMTotalsPopOver2"></viz:Popover>
+												<viz:Popover id="RMTotalsPopOver3"></viz:Popover>
 												<viz:Popover id="RMTotalsGLPopOver"></viz:Popover>
 												<viz:Popover id="RMTotalsGLMonthPopOver"></viz:Popover>
 							
@@ -118,8 +120,7 @@
 						</layout:content>
 					</layout:Grid>
 					
-					
-					<layout:Grid defaultSpan="L12 M12 S12" hSpacing="0.5" vSpacing=".5" class="customBackground3">
+					<layout:Grid id="TopPM" defaultSpan="L12 M12 S12" hSpacing="0.5" vSpacing=".5" class="customBackground3">
 						<layout:content>
 												<viz:Popover id="TOPOrderTypePopOver"></viz:Popover>
 												<viz:Popover id="TOPFuncLocPopOver"></viz:Popover>
@@ -128,7 +129,6 @@
 							<core:Fragment fragmentName="ZUI_PM_RM_COST_MONITORING.view.subview.PMTop" type="XML"/>
 						</layout:content>
 					</layout:Grid>
-					
 					
 					<layout:Grid defaultSpan="L12 M12 S12" hSpacing="0.5" vSpacing=".5" class="customBackground3">
 						<layout:content>
@@ -140,54 +140,39 @@
 					<!--CHART-->
 			
 			<!--Start Detail Table -->
-					<VBox fitContainer="true">
-						<layout:FixFlex id='detailsTableFixFlex' minFlexSize="450" class="customBackground sapUiTinyMarginTop">
-							<layout:flexContent>
+			
+					<layout:Grid defaultSpan="L12 M12 S12" hSpacing="0.5" vSpacing=".5" class="customBackground3">
+						<layout:content>
+					<!--<VBox fitContainer="true">-->
+						<!--<layout:FixFlex id='detailsTableFixFlex' minFlexSize="450" class="customBackground sapUiTinyMarginTop">-->
+						<!--	<layout:flexContent>-->
+						
 								<!--Smart Table-->
-								<smartTable:SmartTable id="smartTableDetails" smartFilterId="smartFilterBar" visible="true" entitySet="ZCDS_PM_RMCM_DETAIL_ITEMResults"
-									tableType="Table" enableAutoBinding="true" useVariantManagement="true" dataReceived="onDataReceived" 
-									persistencyKey="RMCMPFKey" showVariantManagement="false" useTablePersonalisation="true" showFullScreenButton="true"
-									header="{i18n>detailstable}" 
-									 >
 									<!--beforeExport="onExport" -->
 									<!--showFullScreenButton="false"-->
 									<!-- data:presentationVariantQualifier="DetailsTablePresentation"-->
+									<!--<table:AnalyticalTable id="detailsTable" visibleRowCountMode="auto" numberOfExpandedLevels="1"/>-->
+									
+								<smartTable:SmartTable id="smartTableDetails" smartFilterId="smartFilterBar" visible="true" entitySet="ZCDS_PM_RMCM_DETAIL_ITEMResults"
+									tableType="Table" enableAutoBinding="true" useVariantManagement="true" dataReceived="onDataReceived" 
+									persistencyKey="RMCMPFKey" showVariantManagement="true" useTablePersonalisation="true" showFullScreenButton="true"
+									header="Line Items"  class="sapUiResponsiveContentPadding">
 									<smartTable:layoutData>
 										<FlexItemData growFactor="1" baseSize="0%"/>
 									</smartTable:layoutData>
-									<!--<table:AnalyticalTable id="detailsTable" visibleRowCountMode="auto" numberOfExpandedLevels="1"/>-->
-														<table:AnalyticalTable id="detailsTable" title=""></table:AnalyticalTable>
+									<table:AnalyticalTable id="detailsTable" title=""></table:AnalyticalTable>
 								</smartTable:SmartTable>
+								
 								<!--//Smart Table-->
-							</layout:flexContent>
-						</layout:FixFlex>
-					</VBox>
-			<!--End Detail Table -->
-			
-			
-			<!--Start Detail Table -->
-			<!--		<VBox fitContainer="true">-->
-			<!--			<layout:FixFlex id='detailsTableFixFlex' minFlexSize="500" class="customBackground sapUiNoMarginTop">-->
-			<!--				<layout:flexContent>-->
-								<!--Smart Table-->
-			<!--					<smartTable:SmartTable id="smartTableDetails" smartFilterId="smartFilterBar" visible="true" entitySet="ZCDS_PM_RMCM_DETAIL_ITEMResults"-->
-			<!--						header="" tableType="Table" enableAutoBinding="true" useVariantManagement="true" dataReceived="onDataReceived" -->
-			<!--						persistencyKey="RMCMPFKey" showVariantManagement="true" useTablePersonalisation="true" showFullScreenButton="true"-->
-			<!--						>-->
-									<!--showFullScreenButton="false"-->
-									 <!--data:presentationVariantQualifier="DetailsTablePresentation"-->
-			<!--						<smartTable:layoutData>-->
-			<!--							<FlexItemData growFactor="1" baseSize="0%"/>-->
-			<!--						</smartTable:layoutData>-->
-									<!--<table:AnalyticalTable id="detailsTable" visibleRowCountMode="auto" numberOfExpandedLevels="1"/>-->
-			<!--					</smartTable:SmartTable>-->
-								<!--//Smart Table-->
-			<!--				</layout:flexContent>-->
-			<!--			</layout:FixFlex>-->
-			<!--		</VBox>-->
+								
+						<!--	</layout:flexContent>-->
+						<!--</layout:FixFlex>-->
+					<!--</VBox>-->
+						</layout:content>
+					</layout:Grid>
 			<!--End Detail Table -->
 					
-					
+			
 					</layout:content>
 				</layout:Grid>
 			</ScrollContainer>

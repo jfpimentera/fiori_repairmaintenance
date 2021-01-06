@@ -17,7 +17,7 @@
     {
       "templateId": "servicecatalog.connectivityComponent",
       "templateVersion": "0.0.0",
-      "dateTimeStamp": "Fri, 11 Dec 2020 07:33:11 GMT"
+      "dateTimeStamp": "Mon, 04 Jan 2021 07:40:03 GMT"
     }
   ],
   "translation": {
@@ -40,16 +40,16 @@
     "blockPushLevel": "Error"
   },
   "build": {
-    "buildRequired": true,
+    "buildRequired": false,
     "sourceFolder": "webapp",
     "targetFolder": "dist",
     "excludedFolders": [],
     "excludedFiles": [],
-    "lastBuildDateTime": "Thu, 03 Dec 2020 08:32:37 GMT"
+    "lastBuildDateTime": "Tue, 05 Jan 2021 09:56:36 GMT"
   },
   "mockpreview": {
-    "mockUri": "/sap/opu/odata/sap/ZCDS_PM_RMCM_TOTALS_CDS",
-    "metadataFilePath": "",
+    "mockUri": "/sap/opu/odata/sap/ZCDS_PM_RMCM_DETAIL_ITEM4_CDS",
+    "metadataFilePath": "localService/metadata.xml",
     "loadJSONFiles": false,
     "loadCustomRequests": false,
     "mockRequestsFilePath": ""

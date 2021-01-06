@@ -5,14 +5,14 @@ sap.ui.define([
 	"sap/ui/core/format/NumberFormat",
 	"sap/ui/model/Filter", 
 	"sap/ui/core/format/DateFormat",
-	"sap/ui/model/json/JSONModel"
-], function(Controller, ChartFormatter, Format, NumberFormat, Filter, DateFormat, JSONModel) {
+	"sap/ui/model/json/JSONModel",
+	"sap/m/MessageToast"
+], function(Controller, ChartFormatter, Format, NumberFormat, Filter, DateFormat, JSONModel, MessageToast) {
 	"use strict";
 
 	return Controller.extend("ZUI_PM_RM_COST_MONITORING.controller.Main", {
-
+		
 		onInit: function() {
-
 			Format.numericFormatter(ChartFormatter.getInstance());
 			this._formatPattern = ChartFormatter.DefaultPattern;
 			
@@ -30,58 +30,38 @@ sap.ui.define([
 			var fiscalYear = this.getView().byId("FiscalYear");
 			fiscalYear.setModel(oInitModel);
 			
-			
-			// var datePicker = this.getView().byId("ReportDatePicker");
-			// datePicker.setModel(oInitModel);
-			// var datePickerDetails = this.getView().byId("ReportDatePickerDetails");
-			// datePickerDetails.setModel(oInitModel);
-
 			var currentDate = new Date();
-			// var dd = String(currentDate.getDate()).padStart(2, "0");
 			var mm = String(currentDate.getMonth() + 1).padStart(2, "0");
-			// var yyyy = currentDate.getFullYear();
 
 
 			var periodTo = this.getView().byId("periodToComboBox");
 			periodTo.setSelectedKey(mm);
-
-
-			// var initialDate = yyyy + mm + dd;
-			// var startDate = yyyy + "01" + "01";
-
-
-			// sap.m.MessageBox.success(dateFormatted, {
-			//     title: "Success",                                    // default
-			//     onClose: null,                                       // default
-			//     styleClass: "",                                      // default
-			//     initialFocus: null,                                  // default
-			//     textDirection: sap.ui.core.TextDirection.Inherit     // default
-			// });
-
-			// this.setDataTable("1", "1", yyyy);
-			this.setDataTable("1", 	periodTo.getSelectedKey(), dateFormatted);
-			// this.setModel("smartTableDetails", "/ZCDS_PM_RMCM_DETAIL_ITEM", "itemDetail");
 			
-			var totalsPath = "/ZCDS_PM_RMCM_DETAIL_ITEM(P_PeriodFrom='1',P_PeriodTo='" + periodTo.getSelectedKey() + "',P_KeyDate='" + dateFormatted + "')/Results";
-			this.setModel("Grid", totalsPath, "totalsModel"); //Totals
+			var periodToN = ((periodTo.getSelectedKey() === 12) ? 99 : periodTo.getSelectedKey());
 			
-			// var pathTotals = "/ZCDS_PM_RMCM_DETAIL_ITEM(P_PeriodFrom='1',P_PeriodTo='" + periodTo.getSelectedKey() + "',P_KeyDate='" + dateFormatted + "')/Results"; 
-			// this.setModel("Grid", pathTotals, "totalsModel");
-
+				// topPM.setVisible((oData.results.length >= 1) ? true : false);
+			this.setDataTable("1", 	periodToN, dateFormatted);
+			
+			this.setTotals("1", 	periodToN, dateFormatted, this.getView().byId("smartFilterBar").getFilters()); //Totals
+			this.setTotalsOT("1", 	periodToN, dateFormatted, this.getView().byId("smartFilterBar").getFilters()); //Totals
+			
 			// CHARTS
-			// this.setModel("RMTotals", path, "RMTotalsModel"); 
-			this.setRM1ChartData("1", 	periodTo.getSelectedKey(), dateFormatted, this.getView().byId("smartFilterBar").getFilters());
-			this.setRM2ChartData("1", 	periodTo.getSelectedKey(), dateFormatted, this.getView().byId("smartFilterBar").getFilters());
-			this.setRM3ChartData("1", 	periodTo.getSelectedKey(), dateFormatted, this.getView().byId("smartFilterBar").getFilters());
+			this.setRM1ChartDataPieL("1", 	periodToN, dateFormatted, this.getView().byId("smartFilterBar").getFilters());
+			this.setRM1ChartDataPieR("1", 	periodToN, dateFormatted, this.getView().byId("smartFilterBar").getFilters());
+			this.setRM1ChartDataStack("1", 	periodToN, dateFormatted, this.getView().byId("smartFilterBar").getFilters());
+			this.setRM2ChartData("1", 	periodToN, dateFormatted, this.getView().byId("smartFilterBar").getFilters());
+			this.setRM3ChartData("1", 	periodToN, dateFormatted, this.getView().byId("smartFilterBar").getFilters());
 
-			this.setTop1ChartData("1", 	periodTo.getSelectedKey(), dateFormatted, this.getView().byId("smartFilterBar").getFilters());
-			this.setTop2ChartData("1", 	periodTo.getSelectedKey(), dateFormatted, this.getView().byId("smartFilterBar").getFilters());
-			this.setTop3ChartData("1", 	periodTo.getSelectedKey(), dateFormatted, this.getView().byId("smartFilterBar").getFilters());
+			this.setTop1ChartData("1", 	periodToN, dateFormatted, this.getView().byId("smartFilterBar").getFilters());
+			this.setTop2ChartData("1", 	periodToN, dateFormatted, this.getView().byId("smartFilterBar").getFilters());
+			this.setTop3ChartData("1", 	periodToN, dateFormatted, this.getView().byId("smartFilterBar").getFilters());
 			
-			this.setTop4ChartData("1", 	periodTo.getSelectedKey(), dateFormatted, this.getView().byId("smartFilterBar").getFilters());
+			this.setTop4ChartData("1", 	periodToN, dateFormatted, this.getView().byId("smartFilterBar").getFilters());
 			
 			// CHARTS FORMAT
-			this.setRM1ChartFormat();
+			this.setRM1ChartFormatPie1();  
+			this.setRM1ChartFormatPie2(); 
+			this.setRM1ChartFormatStack(); 
 			this.setRM2ChartFormat();
 			this.setRM3ChartFormat();
 			
@@ -94,27 +74,75 @@ sap.ui.define([
 			this.getView().addStyleClass(this.getContentDensityClass());
 		},
 		
-		
-		
-		setModel: function(pComponent, pPath, pModelName) {
-			// this.showBusyIndicator(4000);
+	onBeforeExport: function(oEvt) {
+		var mExcelSettings = oEvt.getParameter("exportSettings");
+		// GW export
+		if (mExcelSettings.url) {
+			return;
+		}
+		// UI5 Client Export
+		mExcelSettings.fileName = mExcelSettings.fileName + "V1"; // example to modify fileName
 
-			var oModel = this.getOwnerComponent().getModel("itemDetail_Totals");
-			var oComponent = this.getView().byId(pComponent);
+		// Disable Worker as Mockserver is used in explored
+		mExcelSettings.worker = false;
+	},
+		
+		
+		setTotals: function(periodFrom, periodTo, curryear, filterBar) {
+			// this.showBusyIndicator(4000);
+			var keyDate = curryear + "0101";
+
+			var oModelTotals = this.getOwnerComponent().getModel("itemDetail_Totals");
 			var oJSONModel = new sap.ui.model.json.JSONModel();
-			oModel.read(pPath, {
+			var overallDonutChart = this.getView().byId("RMTile");
+
+			var aFilters = filterBar;
+			var pathTotals = "/ZCDS_PM_RMCM_TOTALS(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
+			
+			oModelTotals.read(pathTotals, {
+				urlParameters: {
+					"$select": "Currency,FiscalYear,Amount"
+				},
+				filters: aFilters,
 				success: function(oData, oResponse) {
 					oJSONModel.setData(oData);
-					if(pPath === "/ZCDS_PM_RMCM_DETAIL_ITEM(P_PeriodFrom='1',P_PeriodTo='12',P_KeyDate='2020')/Results"){
-						oData.results[0].INT_COV = parseFloat(oData.results[0].FiscalYear);
-						oData.results[0].INT_COV_TARGET= parseFloat(oData.results[0].Amount);
-						oData.results[0].INT_COV_MAX = parseFloat(oData.results[0].Currency);
-					}
-					oComponent.setModel(oJSONModel, pModelName);
-					sap.ui.core.BusyIndicator.hide();
+					overallDonutChart.setModel(oJSONModel, "totalsModel");
+					// MessageToast.show("SUCCESS");
 				},
-				error: function(err) {}
+				error: function(err) {
+					// MessageToast.show("ERROR");
+				}
 			});
+		}, 
+		
+		
+		setTotalsOT: function(periodFrom, periodTo, curryear, filterBar) {
+			// this.showBusyIndicator(4000);
+			var keyDate = curryear + "0101";
+
+			var oModelTotalsOT = this.getOwnerComponent().getModel("itemDetail_TotalsPM");
+			var oJSONModel = new sap.ui.model.json.JSONModel();
+			var overallOrderType = this.getView().byId("PMTile");
+
+			var aFilters = filterBar;
+			
+			var pathTotalsOT = "/ZCDS_PM_RMCM_TOTALS_PM(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
+			
+			oModelTotalsOT.read(pathTotalsOT, {
+				urlParameters: {
+					"$select": "FiscalYear,Amount,Currency"
+				},
+				filters: aFilters,
+				success: function(oData, oResponse) {
+					oJSONModel.setData(oData);
+					overallOrderType.setModel(oJSONModel, "totalsOTModel");
+					// MessageToast.show("SUCCESS");
+				},
+				error: function(err) {
+					// MessageToast.show("ERROR");
+				}
+			});
+			
 		}, 
 		
 		
@@ -141,63 +169,27 @@ sap.ui.define([
 			this.getView().byId("assText2").addStyleClass("totalsText");
 			}
 		},
-     //   onExport: function() {
-     //       var oExportConfiguration, oExportPromise;
- 
-     //       /* Creates the configuration and initializes the spreadsheet export */
-     //       oExportConfiguration = this.createExportConfiguration();
-            
-     //       var aColumns = [];
-			  //aColumns.push({
-			  //  label: "Name",
-			  //  property: "name"
-			  //});
-			  //aColumns.push({
-			  //  label: "Salary",
-			  //  property: "salary",
-			  //  type: "number",
-			  //  scale: 2
-			  //});
-			  //var mSettings = {
-			  //  workbook: { columns: aColumns },
-			  //  // dataSource: mDataSource,
-			  //  fileName: "salary.xlsx"
-			  //};
-     //       var oSpreadsheet = new sap.ui.export.Spreadsheet(mSettings);
- 
-     //       /* Starts the export and returns a Promise */
-     //       oExportPromise = oSpreadsheet.build();
- 
-     //       oExportPromise.then(function() {
-     //           // Here you can perform additional steps after the export has finished
-     //       });
-     //   },
- 
-     //   createExportConfiguration: function() {
-     //       var oConfiguration = {
-					//     workbook: {
-					//         context: {
-					//             application: "Supplier Invoices List",
-					//             version: "6.1.0-SNAPSHOT",
-					//             title: "Supplier Invoices",
-					//             modifiedBy: "Doe, John",
-					//             sheetName: "Invoices"
-					//         }
-					//     }
-					// };
- 
-     //       return oConfiguration;
-     //   },
-
 		onDataReceived: function() {
-			var oTable = this.byId("smartTableDetails");
-			var i = 0;                         
-			oTable.getTable().getColumns().forEach(function(oLine) {
-				oLine.setWidth("100%");
-				oLine.getParent().autoResizeColumn(i);
-				oLine.getParent().autoResizeColumn(0);
-				i++;
-			});
+			var topPM1 = this.getView().byId("TOPOrderType");
+			var topPM2 = this.getView().byId("TOPFuncLoc");
+			var topPM3 = this.getView().byId("TOPEquipment");
+			
+			var res = topPM1.getVisible().toString().concat(topPM2.getVisible().toString(), topPM3.getVisible().toString());
+			
+			// MessageToast.show(res);
+				
+			if (res === "falsefalsefalse")
+			{
+				topPM1.setVisible(false);
+				topPM2.setVisible(false);
+				topPM3.setVisible(false);
+			}
+			else
+			{
+				topPM1.setVisible(true);
+				topPM2.setVisible(true);
+				topPM3.setVisible(true);
+			}
 		},
 		
 		setDataTable: function(periodFrom, periodTo, curryear) {
@@ -205,11 +197,10 @@ sap.ui.define([
 			var keyDate = curryear + "0101";
 			
 			var path = "/ZCDS_PM_RMCM_DETAIL_ITEM(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
-			// ,P_Year='" + curryear + "'
-			// var path = "/ZCDS_PM_RMCM_DETAIL_ITEM";
-
+		
 			var oSmartTableProjects = this.getView().byId("smartTableDetails");
 			oSmartTableProjects.setTableBindingPath(path);
+			
 		},
 		
 		
@@ -217,27 +208,29 @@ sap.ui.define([
 			
 			var keyDate = curryear + "0101";
 			
-			var oModel = this.getOwnerComponent().getModel("itemDetail");
+			var oModel = this.getOwnerComponent().getModel("itemDetail_OrderType");
 			var oJSONModel = new sap.ui.model.json.JSONModel();
 
 			var aFilters = filterBar;
 			var overallDonutChart = this.getView().byId("TOPOrderTypeFrame");
 
-			var path = "/ZCDS_PM_RMCM_DETAIL_ITEM(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
+			var topPM = this.getView().byId("TOPOrderType");
+				
+			var path = "/ZCDS_PM_RMCM_ORDERTYPE(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
 			oModel.read(path, {
 				urlParameters: {
-					"$select": "OrderType,FiscalYear,ordertypename,Amount"
-					,"$filter": "OrderType eq 'PM01' or OrderType eq 'PM02' or OrderType eq 'PM03' or OrderType eq 'PM04' or OrderType eq 'PM05' or OrderType eq 'PM06'"
-					// "$top": "2",
+					"$select": "OrderType,OrderTypeName,FiscalYear,Amount"
 					,"$orderby": "OrderType asc"
 				},
 				filters: aFilters,
 				success: function(oData, oResponse) {
 					oJSONModel.setData(oData);
 					overallDonutChart.setModel(oJSONModel, "TOPOrderTypeModel");
+				
+				topPM.setVisible((oData.results.length >= 1) ? true : false);
 				},
 				error: function(err) {
-					// console.log("error");
+				// console.log("error");
 				}
 			});
 		},
@@ -246,55 +239,64 @@ sap.ui.define([
 			
 			var keyDate = curryear + "0101";
 			
-			var oModel = this.getOwnerComponent().getModel("itemDetail");
+			var oModel = this.getOwnerComponent().getModel("itemDetail2");
 			var oJSONModel = new sap.ui.model.json.JSONModel();
 
 			var aFilters = filterBar;
 			var overallDonutChart = this.getView().byId("TOPFuncLocFrame");
 
-			var path = "/ZCDS_PM_RMCM_DETAIL_ITEM(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
+			var topPM = this.getView().byId("TOPFuncLoc");
+				
+			var path = "/ZCDS_PM_RMCM_DETAIL_ITEM2(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
 			oModel.read(path, {
+				filters: aFilters,
 				urlParameters: {
 					"$select": "FuncLoc,FuncLocName,Amount",
-					"$filter": "FuncLoc ne ''",
+					// "$filter": "FuncLoc ne '-'",
 					"$top": "20",
 					"$orderby": "Amount desc"
 				},
-				filters: aFilters,
 				success: function(oData, oResponse) {
 					oJSONModel.setData(oData);
 					overallDonutChart.setModel(oJSONModel, "TOPFuncLocModel");
+					
+				topPM.setVisible((oData.results.length >= 1) ? true : false);
 				},
 				error: function(err) {
 					// console.log("error");
 				}
 			});
+			
 		},
 		
 		setTop3ChartData: function(periodFrom, periodTo, curryear, filterBar) {
 			
 			var keyDate = curryear + "0101";
 			
-			var oModel = this.getOwnerComponent().getModel("itemDetail");
+			var oModel = this.getOwnerComponent().getModel("itemDetail3");
 			var oJSONModel = new sap.ui.model.json.JSONModel();
 
 			var aFilters = filterBar;
 			var equipChart = this.getView().byId("TOPEquipmentFrame");
 
-			var path = "/ZCDS_PM_RMCM_DETAIL_ITEM(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
+			var topPM = this.getView().byId("TOPEquipment");
+				
+			var path = "/ZCDS_PM_RMCM_DETAIL_ITEM3(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
 			oModel.read(path, {
+				filters: aFilters,
 				urlParameters: {
 					"$select": "Equip,EquipName,Amount",
-					"$filter": "Equip ne ''",
-					// "$filter": "Equip ne ''",
+					// "$filter": "Equip ne '-'",
 					"$top": "20"
-					,
-					"$orderby": "Amount desc"
+					,"$orderby": "Amount desc"
 				},
-				filters: aFilters,
 				success: function(oData, oResponse) {
 					oJSONModel.setData(oData);
 					equipChart.setModel(oJSONModel, "TOPEquipmentModel");
+					
+					// MessageToast.show(oData.results.length);
+					
+				topPM.setVisible((oData.results.length >= 1) ? true : false);
 				},
 				error: function(err) {
 					// console.log("error");
@@ -306,17 +308,19 @@ sap.ui.define([
 			
 			var keyDate = curryear + "0101";
 			
-			var oModel = this.getOwnerComponent().getModel("itemDetail");
+			var oModel = this.getOwnerComponent().getModel("itemDetail4");
 			var oJSONModel = new sap.ui.model.json.JSONModel();
 
 			var aFilters = filterBar;
 			var overallDonutChart = this.getView().byId("TOPCostCenterFrame");
+			
+			var topPM = this.getView().byId("TOPCostCenter");
 
-			var path = "/ZCDS_PM_RMCM_DETAIL_ITEM(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
+			var path = "/ZCDS_PM_RMCM_DETAIL_ITEM4(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
 			oModel.read(path, {
 				urlParameters: {
-					"$select": "CostCenter,costcentername,OrderType,ordertypename,Amount",
-					"$filter": "OrderType eq '-'",
+					"$select": "CostCenter,costcentername,OrderType,Amount",
+					// "$filter": "OrderType eq '-' and CostCenter ne '-'",
 					"$top": "30",
 					"$orderby": "Amount desc"
 				},
@@ -324,6 +328,8 @@ sap.ui.define([
 				success: function(oData, oResponse) {
 					oJSONModel.setData(oData);
 					overallDonutChart.setModel(oJSONModel, "TOPCostCenterModel");
+					
+				topPM.setVisible((oData.results.length >= 1) ? true : false);
 				},
 				error: function(err) {
 					// console.log("error");
@@ -366,6 +372,7 @@ sap.ui.define([
 					},
 					dataLabel: {
 						type: "percentage",
+                        // formatString: this._formatPattern.STANDARDPERCENT_MFD2,
 						visible: true,
 						style: {
 							fontSize: "9"
@@ -396,8 +403,8 @@ sap.ui.define([
 			                        visible: false
 			                    },
 								window: {
-									start: "firstDataPoint",
-									end: "lastDataPoint"
+									start: "Jessy",
+									end: "Gwapo"
 								},
 								isScrollable: true
 			                },
@@ -421,6 +428,12 @@ sap.ui.define([
 			            });
 
 			// this.setColorPalette(oChart);
+			oChart.setVizScales([{
+				feed: "color",
+				// palette: ["#336699", "#00D2DC"]
+				palette: ["#98bc62", "#98bc62"]
+				
+			}]);
 
 			var oPopOver = this.getView().byId("TOPFuncLocPopOver");
 			oPopOver.connect(oChart.getVizUid());
@@ -434,12 +447,16 @@ sap.ui.define([
 			                    dataLabel: {
 			                        formatString: this._formatPattern.SHORTFLOAT_MFD2,
 			                        visible: false
-			                    },
-								window: {
+			                    }
+			    				,window: {
 									start: "firstDataPoint",
 									end: "lastDataPoint"
-								},
-								isScrollable: true
+								}
+								,dataPointSize: {
+									min: 50,
+									max: 50
+								}
+								// ,isScrollable: false
 			                },
 			                valueAxis: {
 			                    label: {
@@ -453,14 +470,22 @@ sap.ui.define([
 			                    title: {
 			                        visible: false
 			                    }
+			                    // ,axisLine: {
+			                    // 	visible: false
+			                    // }
 			                },
 			                title: {
 			                    visible: false
 			                    // text: 'Revenue by City and Store Name'
 			                }
 			            });
-
-			// this.setColorPalette(oChart);
+			
+			oChart.setVizScales([{
+				feed: "color",
+				// palette: ["#336699", "#00D2DC"]
+				palette: ["#2d5f2e", "#98bc62"]
+				
+			}]);
 
 			var oPopOver = this.getView().byId("TOPEquipmentPopOver");
 			oPopOver.connect(oChart.getVizUid());
@@ -501,10 +526,86 @@ sap.ui.define([
 			var oPopOver = this.getView().byId("TOPCostCenterPopOver");
 			oPopOver.connect(oChart.getVizUid());
 			oPopOver.setFormatString(ChartFormatter.DefaultPattern.STANDARDFLOAT);
+			
 		},
 
 		
-		setRM1ChartData: function(periodFrom, periodTo, curryear, filterBar) {
+		setRM1ChartDataPieL: function(periodFrom, periodTo, curryear, filterBar) {
+			
+			var keyDate = curryear + "0101";
+			
+			var oModel = this.getOwnerComponent().getModel("itemDetail");
+			// var oModel = this.getOwnerComponent().getModel("itemDetail_prevYR");
+			var oJSONModel = new sap.ui.model.json.JSONModel();
+
+			var aFilters = filterBar;
+			var overallDonutChart = this.getView().byId("RMTotals_PieL");
+			
+			var topPM = this.getView().byId("totPie1");
+			
+			// var path = "/ZCDS_PM_RMCM_DETAIL_PREVYR(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
+			var path = "/ZCDS_PM_RMCM_DETAIL_ITEM(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
+			oModel.read(path, {
+				urlParameters: {
+					"$select": "GL_Label2,Amount",
+					// "$top": "2",
+					// "$filter": "FiscalYear eq '" + curryear + "'",
+					"$orderby": "GL_Label2 asc"
+				},
+				filters: aFilters,
+				success: function(oData, oResponse) {
+					oJSONModel.setData(oData);
+					overallDonutChart.setModel(oJSONModel, "RMTotalsModel_PieL");
+					
+				topPM.setVisible((oData.results.length >= 1) ? true : false);
+				},
+				error: function(err) {
+					// console.log("error");
+				}
+			});
+		},
+
+		setRM1ChartDataPieR: function(periodFrom, periodTo, curryear, filterBar) {
+			
+			var prevYR = curryear - 1;
+			var keyDate = prevYR + "0101";
+			
+			var oModel = this.getOwnerComponent().getModel("itemDetail");
+			// var oModel = this.getOwnerComponent().getModel("itemDetail_prevYR");
+			var oJSONModel = new sap.ui.model.json.JSONModel();
+
+			var aFilters = filterBar;
+			var pieChart = this.getView().byId("RMTotals_PieR");
+			
+
+			var topPM = this.getView().byId("totPie2");
+			
+
+			// var path = "/ZCDS_PM_RMCM_DETAIL_PREVYR(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
+			var path = "/ZCDS_PM_RMCM_DETAIL_ITEM(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
+			oModel.read(path, {
+				urlParameters: {
+					"$select": "GL_Label2,Amount"
+					// "$top": "2",
+					// "$filter": "FiscalYear eq '" + prevYR + "'"
+					,"$orderby": "GL_Label2 asc"
+				},
+				filters: aFilters,
+				success: function(oData, oResponse) {
+					oJSONModel.setData(oData);
+					pieChart.setModel(oJSONModel, "RMTotalsModel_PieR");
+					
+			// MessageToast.show(prevYR);
+				topPM.setVisible((oData.results.length >= 1) ? true : false);
+				},
+				error: function(err) {
+					// console.log("error");
+				}
+			});
+			
+		},
+		
+		setRM1ChartDataStack: function(periodFrom, periodTo, curryear, filterBar) {
 			
 			var keyDate = curryear + "0101";
 			
@@ -512,19 +613,20 @@ sap.ui.define([
 			var oJSONModel = new sap.ui.model.json.JSONModel();
 
 			var aFilters = filterBar;
-			var overallDonutChart = this.getView().byId("RMTotalsFrame");
-
+			var overallDonutChart = this.getView().byId("RMTotals_Stack");
+			
 			var path = "/ZCDS_PM_RMCM_DETAIL_PREVYR(P_PeriodFrom='" + periodFrom + "',P_PeriodTo='" + periodTo + "',P_KeyDate='" + keyDate + "')/Results";
 			oModel.read(path, {
 				urlParameters: {
 					"$select": "FiscalYear,GL_Label2,Amount",
 					// "$top": "2",
-					"$orderby": "FiscalYear desc"
+					// "$filter": "FiscalYear eq '" + curryear + "'",
+					"$orderby": "FiscalYear desc, GL_Label2 asc"
 				},
 				filters: aFilters,
 				success: function(oData, oResponse) {
 					oJSONModel.setData(oData);
-					overallDonutChart.setModel(oJSONModel, "RMTotalsModel");
+					overallDonutChart.setModel(oJSONModel, "RMTotalsModel_Stack");
 				},
 				error: function(err) {
 					// console.log("error");
@@ -547,7 +649,7 @@ sap.ui.define([
 			oModel.read(path, {
 				urlParameters: {
 					"$select": "FiscalYear,GL_Label1,Amount",
-					"$orderby": "FiscalYear desc"
+					"$orderby": "FiscalYear desc, GL_Label1 asc"
 				},
 				filters: aFilters,
 				success: function(oData, oResponse) {
@@ -575,11 +677,14 @@ sap.ui.define([
 			oModel.read(path, {
 				urlParameters: {
 					"$select": "Period,Per_TXT_UP,GL_Label1,Amount",
-					"$orderby": "Period asc"
+					"$orderby": "Period asc, Amount desc, GL_Label1 desc"
 				},
 				filters: aFilters,
 				success: function(oData, oResponse) {
 					oJSONModel.setData(oData);
+					
+					// oData.results[0].Amount = parseFloat(oData.results[0].Amount);
+					
 					overallDonutChart.setModel(oJSONModel, "RMTotalsGLMonthModel");
 				},
 				error: function(err) {
@@ -588,19 +693,158 @@ sap.ui.define([
 			});
 		},
 
-		setRM1ChartFormat: function(chart, oPopover) {
-			var oChart = this.getView().byId("RMTotalsFrame");
+		setRM1ChartFormatPie1: function(chart, oPopover) {
+			
+			var oVizFrame = this.oVizFrame = this.getView().byId("RMTotals_PieL");
 
-var oVizFrame = this.oVizFrame = this.getView().byId("RMTotalsFrame");
+			oVizFrame.setVizProperties({
+				title: {
+					visible: "false"
+				},
+				legend: {
+					visible: false,
+					label: {
+						style: {
+							fontSize: "9"
+						}
+					},
+					isScrollable: false
+				},
+				legendGroup: {
+					layout: {
+						position: "top"
+					}
+				},
+				interaction: {
+					selectability: {
+						mode: "exclusive"
+					}
+				},
+				plotArea: {
+					gridline: {
+						visible: true
+					},
+					dataLabel: {
+						type: "percentage",
+                        // formatString: this._formatPattern.STANDARDPERCENT_MFD2,
+						visible: true,
+						style: {
+							fontSize: "9"
+						},
+						showTotal: true
+					},
+					dataPointSize: {
+						min: 55,
+						max: 55
+					}
+				}
+			});
+			
+			oVizFrame.setVizScales([{
+				feed: "color",
+				// palette: ["#336699", "#00D2DC"]
+				palette: ["#498ec5", "#b6d1de"]
+				
+			}]);
+
+			var oPopOver = this.getView().byId("RMTotalsPopOver");
+			oPopOver.connect(oVizFrame.getVizUid());
+			oPopOver.setFormatString(ChartFormatter.DefaultPattern.STANDARDFLOAT);
+			// oPopOver.setFormatString(FIORI_PERCENTAGE_FORMAT_2);
+		},
+		
+		setRM1ChartFormatPie2: function(chart, oPopover) {
+			
+			var oVizFrame = this.oVizFrame = this.getView().byId("RMTotals_PieR");
+
+			oVizFrame.setVizProperties({
+				title: {
+					visible: "false"
+				},
+				legend: {
+					visible: false,
+					label: {
+						style: {
+							fontSize: "9"
+						}
+					},
+					isScrollable: false
+				},
+				legendGroup: {
+					layout: {
+						position: "top"
+					}
+				},
+				interaction: {
+					selectability: {
+						mode: "exclusive"
+					}
+				},
+				plotArea: {
+					gridline: {
+						visible: true
+					},
+					dataLabel: {
+						type: "percentage",
+                        // formatString: this._formatPattern.STANDARDPERCENT_MFD2,
+						visible: true,
+						style: {
+							fontSize: "9"
+						},
+						showTotal: true
+					},
+					dataPointSize: {
+						min: 55,
+						max: 55
+					}
+				}
+			});
+			
+
+			oVizFrame.setVizScales([{
+				feed: "color",
+				// palette: ["#336699", "#00D2DC"]
+				palette: ["#498ec5", "#b6d1de"]
+				
+			}]);
+
+			var oPopOver = this.getView().byId("RMTotalsPopOver2");
+			oPopOver.connect(oVizFrame.getVizUid());
+			oPopOver.setFormatString(ChartFormatter.DefaultPattern.STANDARDFLOAT);
+			// oPopOver.setFormatString(FIORI_PERCENTAGE_FORMAT_2);
+		},
+		
+		setRM1ChartFormatStack: function(chart, oPopover) {
+			
+			Format.numericFormatter(ChartFormatter.getInstance());
+
+			//Formatter
+			var FIORI_PERCENTAGE_FORMAT_2 = "__UI5__PercentageMaxFraction2";
+			var chartFormatter = ChartFormatter.getInstance();
+			chartFormatter.registerCustomFormatter(FIORI_PERCENTAGE_FORMAT_2, function(value) {
+				var percentage = sap.ui.core.format.NumberFormat.getPercentInstance({
+					style: "percent",
+					maxFractionDigits: 1
+				});
+				return percentage.format(value);
+			});
+			sap.viz.api.env.Format.numericFormatter(chartFormatter);
+
+			
+			
+			var oVizFrame = this.oVizFrame = this.getView().byId("RMTotals_Stack");
+
             oVizFrame.setVizProperties({
                 plotArea: {
-                    mode: "percentage",
-                    dataLabel: {
-                        type: "percentage",
+					dataLabel: {
+                        // type: "percentage",
+						visible: false,
+						showTotal: true,
                         formatString: ChartFormatter.DefaultPattern.SHORTFLOAT_MFD2,
-						visible: true,
-						showTotal: true
-                    }
+							style: {
+								fontSize: "9"
+							}
+					}
                 },
                 
 				legend: {
@@ -617,40 +861,49 @@ var oVizFrame = this.oVizFrame = this.getView().byId("RMTotalsFrame");
 					}
 				},
 				
-                valueAxis: {
-                    label: {
-                        // formatString: this._formatPattern.SHORTFLOAT_MFD2,
+				valueAxis: {
+					title: {
 						visible: false
-                    },
-                    title: {
-                        visible: false
-                    }
-                },
-                valueAxis2: {
-                    label: {
-                        // formatString: this._formatPattern.SHORTFLOAT_MFD2,
-						visible: true
-                    },
-                    title: {
-                        visible: false
-                    }
-                },
+					},
+					label: {
+                        formatString: this._formatPattern.SHORTFLOAT_MFD2,
+						// formatString: FIORI_PERCENTAGE_FORMAT_2,
+						style: {
+							fontSize: "9"
+							// ,visible: true
+						}
+						// ,visible: true
+					}
+				},
                 categoryAxis: {
                     title: {
                         visible: false
+                    },
+                    label: {
+                        // formatString: this._formatPattern.SHORTFLOAT_MFD2,
+						visible: true,
+						style: {
+							fontSize: "9"
+						}
                     }
                 },
-                title: {
-                    visible: false,
-                    text: 'R&M Totals'
-                }
+				title: {
+					text: "R&M by Totals",
+					visible: false
+				}
             });
 
-			this.setColorPalette(oChart);
+			oVizFrame.setVizScales([{
+				feed: "color",
+				// palette: ["#336699", "#00D2DC"]
+				palette: ["#498ec5", "#b6d1de"]
+				
+			}]);
 
-			var oPopOver = this.getView().byId("RMTotalsPopOver");
-			oPopOver.connect(oChart.getVizUid());
-			oPopOver.setFormatString(ChartFormatter.DefaultPattern.INTEGER);
+			var oPopOver = this.getView().byId("RMTotalsPopOver3");
+			oPopOver.connect(oVizFrame.getVizUid());
+			oPopOver.setFormatString(ChartFormatter.DefaultPattern.STANDARDFLOAT);
+			// oPopOver.setFormatString(FIORI_PERCENTAGE_FORMAT_2);
 		},
 		
 		
@@ -667,8 +920,7 @@ var oVizFrame = this.oVizFrame = this.getView().byId("RMTotalsFrame");
 						style: {
 							fontSize: "9"
 						}
-					},
-					isScrollable: false
+					}
 				},
 				legendGroup: {
 					layout: {
@@ -712,13 +964,24 @@ var oVizFrame = this.oVizFrame = this.getView().byId("RMTotalsFrame");
 				plotArea: {
 					// mode: "percentage",
 					dataLabel: {
-						visible: false
+						visible: true,
+						formatString: this._formatPattern.SHORTFLOAT_MFD2,
+						style: {
+							fontSize: "9"
+						}
 					}
 				}
 			});
 
 
-			this.setColorPalette(oChart);
+			// this.setColorPalette(oChart);
+			
+			oChart.setVizScales([{
+				feed: "color",
+				// palette: ["#E9AF32", "#CC5B23"]
+				palette: ["#0c5097", "#e87f33"]
+			}]);
+
 
 			var oPopOver = this.getView().byId("RMTotalsGLPopOver");
 			oPopOver.connect(oChart.getVizUid());
@@ -734,7 +997,11 @@ var oVizFrame = this.oVizFrame = this.getView().byId("RMTotalsFrame");
 				},
 				plotArea: {
 					dataLabel: {
-						visible: false
+						visible: true,
+						formatString: this._formatPattern.SHORTFLOAT_MFD2,
+						style: {
+							fontSize: "9"
+						}
 					},
 					window: {
 						start: "firstDataPoint",
@@ -783,9 +1050,19 @@ var oVizFrame = this.oVizFrame = this.getView().byId("RMTotalsFrame");
 						}
 					}
 				}
+				
 			});
 
-			this.setColorPalette(oChart);
+			// this.setColorPalette(oChart);
+			
+			oChart.setVizScales([{
+				feed: "color",
+				// palette: ["#154890", "#6699FF", "#CDBFAC", "#F5EDE3", "#FF6600"]
+				// palette: ["#154890", "#fbde84", "#e4c98b", "#f0c571", "#967e5e"]
+				palette: ["#154890", 
+				"#508b67", "#95c281", "#967e5e", "#fa4949"]
+			}]);
+
 
 			var oPopOver = this.getView().byId("RMTotalsGLMonthPopOver");
 			oPopOver.connect(oChart.getVizUid());
@@ -793,35 +1070,35 @@ var oVizFrame = this.oVizFrame = this.getView().byId("RMTotalsFrame");
 		},
 
 		
-// rowSelectionChange: function(oEvent){
-// 		var oID = oEvent.getSource().getId();
-// 		var oSelectedRowID = $('#'+oID).find('.smartTableDetails')[1].id;
-// 		var oRow = sap.ui.getCore().byId(oSelectedRowID);
-// 		var oCells = oRow.getCells();
-// 		for(var i=0;i<oCells.length;i++){
-// 			oCells[i].setEditable(true);
-// 		}
-// 	},
 		onSearchDetails: function() {
 			var periodFrom = this.getView().byId("periodFromComboBox");
 			var periodTo = this.getView().byId("periodToComboBox");
 			var fiscalYear = this.getView().byId("FiscalYear");
 			
-			this.setDataTable(periodFrom.getSelectedKey(), 	periodTo.getSelectedKey(), fiscalYear.getSelectedKey());
+			var periodToN = ((periodTo.getSelectedKey() === "12") ? "99" : periodTo.getSelectedKey());
 			
+			this.setDataTable(periodFrom.getSelectedKey(), 	periodToN, fiscalYear.getSelectedKey());
 			
-			this.setRM1ChartData(periodFrom.getSelectedKey(), 	periodTo.getSelectedKey(), fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
-			this.setRM2ChartData(periodFrom.getSelectedKey(), 	periodTo.getSelectedKey(), fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
-			this.setRM3ChartData(periodFrom.getSelectedKey(), 	periodTo.getSelectedKey(), fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
+			this.setTotals(periodFrom.getSelectedKey(), 	periodToN, fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
+			this.setTotalsOT(periodFrom.getSelectedKey(), 	periodToN, fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
 			
-			this.setTop1ChartData(periodFrom.getSelectedKey(), 	periodTo.getSelectedKey(), fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
-			this.setTop2ChartData(periodFrom.getSelectedKey(), 	periodTo.getSelectedKey(), fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
-			this.setTop3ChartData(periodFrom.getSelectedKey(), 	periodTo.getSelectedKey(), fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
+			this.setRM1ChartDataPieL(periodFrom.getSelectedKey(), 	periodToN, fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
+			this.setRM1ChartDataPieR(periodFrom.getSelectedKey(), 	periodToN, fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
+			this.setRM1ChartDataStack(periodFrom.getSelectedKey(), periodToN, fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
 			
-			this.setTop4ChartData(periodFrom.getSelectedKey(), 	periodTo.getSelectedKey(), fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
+			this.setRM2ChartData(periodFrom.getSelectedKey(), 	periodToN, fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
+			this.setRM3ChartData(periodFrom.getSelectedKey(), 	periodToN, fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
+			
+			this.setTop1ChartData(periodFrom.getSelectedKey(), 	periodToN, fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
+			this.setTop2ChartData(periodFrom.getSelectedKey(), 	periodToN, fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
+			this.setTop3ChartData(periodFrom.getSelectedKey(), 	periodToN, fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
+			
+			this.setTop4ChartData(periodFrom.getSelectedKey(), 	periodToN, fiscalYear.getSelectedKey(), this.getView().byId("smartFilterBar").getFilters());
 
 			var oSmartTableProjectsDetails = this.getView().byId("smartTableDetails");
 			oSmartTableProjectsDetails.rebindTable();
+			
+			this.onDataReceived();
 		},
 
 		

@@ -29,7 +29,7 @@
 													<viz:feeds>
 														<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Cost"/>
 														<viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Cost Center"/>
-														<!--<viz.feeds:FeedItem uid="color" type="Dimension" values="Type"/>-->
+														<!--<viz.feeds:FeedItem uid="color" type="Dimension" values="Cost Center"/>-->
 													</viz:feeds>
 												</viz:VizFrame>
 												
