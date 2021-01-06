@@ -1,5 +1,5 @@
 <mvc:View controllerName="ZUI_PM_RM_COST_MONITORING.controller.Main" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
-	displayBlock="true" xmlns="sap.m" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" xmlns:com="sap.suite.ui.commons"
+	displayBlock="true" xmlns="sap.m" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" xmlns:com="sap.suite.ui.commons"  
 	xmlns:smartTable="sap.ui.comp.smarttable" xmlns:core="sap.ui.core" xmlns:micro="sap.suite.ui.microchart" xmlns:table="sap.ui.table"
 	xmlns:layout="sap.ui.layout" xmlns:viz="sap.viz.ui5.controls" xmlns:viz.data="sap.viz.ui5.data" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
 	<App>
@@ -154,13 +154,63 @@
 									<!--<table:AnalyticalTable id="detailsTable" visibleRowCountMode="auto" numberOfExpandedLevels="1"/>-->
 									
 								<smartTable:SmartTable id="smartTableDetails" smartFilterId="smartFilterBar" visible="true" entitySet="ZCDS_PM_RMCM_DETAIL_ITEMResults"
-									tableType="Table" enableAutoBinding="true" useVariantManagement="true" dataReceived="onDataReceived" 
+									tableType="Table" enableAutoBinding="true" useVariantManagement="true" dataReceived="onDataReceived"  
 									persistencyKey="RMCMPFKey" showVariantManagement="true" useTablePersonalisation="true" showFullScreenButton="true"
+									demandPopin="false" senderPress="handleActionPress"
 									header="Line Items"  class="sapUiResponsiveContentPadding">
 									<smartTable:layoutData>
 										<FlexItemData growFactor="1" baseSize="0%"/>
 									</smartTable:layoutData>
-									<table:AnalyticalTable id="detailsTable" title=""></table:AnalyticalTable>
+									
+									
+													<!--<Table id="summaryTable">-->
+													<!--	<columns>-->
+													<!--		<Column hAlign="Center" minScreenWidth="Desktop" demandPopin="true" >-->
+													<!--			<Text text="FI Doc Number" textAlign="Center"/>-->
+													<!--		</Column>-->
+															<!--<Column hAlign="Center" minScreenWidth="Desktop" demandPopin="true" visible="false">-->
+															<!--	<customData>-->
+															<!--		<core:CustomData key="p13nData"-->
+															<!--			value='\{"columnKey": "FIDocNo", "maxLength": "5", "columnIndex":"0", "leadingProperty":"FIDocNo"}'/>-->
+															<!--	</customData>-->
+															<!--	<Text text="Company Code" textAlign="Center"/>-->
+															<!--</Column>-->
+													<!--	</columns>-->
+													<!--	<items>            -->
+													<!--		<ColumnListItem>-->
+													<!--			<cells>-->
+																	<!--<Button icon="sap-icon://approvals" tooltip="View Details" press="handleActionPress" ></Button>-->
+													<!--				<Link text="{FIDocNo}" press="handleActionPress" />-->
+													<!--			</cells>-->
+													<!--		</ColumnListItem>-->
+													<!--	</items>-->
+													<!--</Table>-->
+									
+									<table:AnalyticalTable id="detailsTable" title="">
+										
+									    <table:AnalyticalColumn width="170px" leadingProperty="OrderNo" columnKey="OrderNo" columnIndex="9">
+									    	<!--<core:CustomData value='\{"columnKey": "FIDocNo", "maxLength": "5", "columnIndex":"4", "leadingProperty":"FIDocNo"}'></core:CustomData>-->
+									    	<Label text="Order No" />
+									      <table:template>
+								                <Link text="{OrderNo}" press="handleActionPress"></Link>
+									     </table:template>
+									      <table:customData>
+						                		<core:CustomData key="p13nData" value='\{"columnKey": "OrderNo", "columnIndex":"9" \}' />
+						                  </table:customData>
+									   </table:AnalyticalColumn>
+										
+									    <table:AnalyticalColumn width="170px" leadingProperty="FIDocNo" columnKey="FIDocNo" columnIndex="19">
+									    	<!--<core:CustomData value='\{"columnKey": "FIDocNo", "maxLength": "5", "columnIndex":"4", "leadingProperty":"FIDocNo"}'></core:CustomData>-->
+									    	<Label text="FI Doc No" />
+									      <table:template>
+								                <Link text="{FIDocNo}" press="handleActionPress"></Link>
+									     </table:template>
+									      <table:customData>
+						                		<core:CustomData key="p13nData" value='\{"columnKey": "FIDocNo", "columnIndex":"19" \}' />
+						                  </table:customData>
+									   </table:AnalyticalColumn>
+									   
+									</table:AnalyticalTable>
 								</smartTable:SmartTable>
 								
 								<!--//Smart Table-->

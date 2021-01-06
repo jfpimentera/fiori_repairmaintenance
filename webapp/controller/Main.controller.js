@@ -74,6 +74,121 @@ sap.ui.define([
 			this.getView().addStyleClass(this.getContentDensityClass());
 		},
 		
+		
+		handleActionPress: function(oEvent) {
+
+			// this.getView().byId("smartFilterBar").setVisible(false);
+			// this.getView().byId("smartFilterBarDetails").setVisible(true);
+			// this.byId("SmartTableProjects").getTable().attachItemPress(this.handleRowPress());
+			// var sKey = oEvent.getParameter("key");
+			// MessageToast.show(sKey);
+			// var oTable = this.getView().byId("SmartTableProjects");
+
+			// var object = oEvent.getSource();
+			// var context = {
+			//       object: object,
+			//       bindingContext: oEvent.getSource().getBindingContext()
+			//   };
+			// MessageToast.show("JESSY");
+
+			// for (var i = 0; i < oTable._getSelectedIndicesCount(); i++) {
+			// 	var vEntityId = oTable.getBindingInfo("rows").binding.aKeys[[oTable.getSelectedIndices()[i]]];
+			// 	// var oEntity= oTable.getModel().oData[vEntityId];
+			// 	MessageToast.show(vEntityId);
+			// }
+
+			// var mBindingParams = oEvent.getParameter("bindingParams");
+			// MessageToast.show(mBindingParams.parameters.entitySet);
+
+			// var context = oEvent.oSource.getBindingContext();
+			
+			// var context = oEvent.getSource().getBindingContext();
+			// var companyCode = context.getProperty("CompanyCode");
+			// var businessEntity = context.getProperty("BusinessEntity");
+			// var bldg = context.getProperty("Building");
+			// var prop = context.getProperty("Property");
+
+			// this.setBPAction(companyCode, businessEntity, bldg, prop);
+			
+			MessageToast.show("FI Doc No");
+			
+		},
+
+		
+		// onBeforePopoverOpens: function(oEvent) {
+		// 	var oParameters = oEvent.getParameters();
+		// 	var oSmartLink = sap.ui.getCore().byId(oParameters.originalId);
+		// 	var oRowContext = oSmartLink.getBindingContext();
+			
+		// 	//Workaround: Add navigation parameter FixedAssetSubnumber, it is expected by the "Manage Fixed Assets" app
+		// 	var oSemanticAttributes = oParameters.semanticAttributes;
+		// 	oSemanticAttributes.FixedAsset = oRowContext.getProperty("FixedAsset");
+		// 	oSemanticAttributes.MasterFixedAsset = oRowContext.getProperty("MasterFixedAsset");
+		// 	//Remove AssetCapitalizationDate from the navigation parameters list, since there is an
+		// 	//not resolved issue when navigating to the history sheet
+		// 	if(oSemanticAttributes.AssetCapitalizationDate){
+		// 	  delete oSemanticAttributes.AssetCapitalizationDate;
+		// 	}
+		// 	//Remove AssetCostCenter and CostCenterName from the navigation parameters list, since there is an
+		// 	//not resolved issue when navigating to the history sheet
+		// 	if(oSemanticAttributes.AssetCostCenter){
+		// 		  delete oSemanticAttributes.AssetCostCenter;
+		// 		}
+		// 	if(oSemanticAttributes.CostCenterName){
+		// 		  delete oSemanticAttributes.CostCenterName;
+		// 		}
+			
+		// 	oParameters.setSemanticAttributes(oSemanticAttributes);
+			
+		// 	//Add some asset details to the generic pop-up
+		// 	this._addDataToPopup(oRowContext);
+		// 	//Open pop-up => This will trigger onNavTargetsObtained
+		// 	oParameters.open();
+		// },
+		
+		onNavigateToManageFixedAsset: function(oEvent) {
+			var oContext = null;
+			var oSource = oEvent.getSource();
+			oContext = oSource.getBindingContext();
+			
+			var oNavParameters = {
+					CompanyCode : oContext.getProperty("CompanyCode")
+					// ,
+					// MasterFixedAsset : oContext.getProperty("MasterFixedAsset"),
+					// FixedAsset : oContext.getProperty("FixedAsset"),
+			};
+			
+			var fnOnNavigationError = jQuery.proxy(function(oError) {
+				// var sErrorText = "";
+				if(oError.getErrorCode() === "NavigationHandler.isIntentSupported.notSupported") {
+					// sErrorText = jQuery.sap.formatMessage(this.getResourceBundle().getText("MSG_INVALID_NAV_TARGET"), "FixedAsset", "change");
+				} else {
+				//	sErrorText = this.getResourceBundle().getText("SEVERE_ERROR_OCCURRED");
+				}
+				
+//				MessageBox.show(sErrorText, {
+//					icon: MessageBox.Icon.ERROR,
+//					actions: MessageBox.Action.OK
+//				});
+			}, this);
+			
+			this.oNavigationHandler.navigate("FixedAsset", "manage", oNavParameters, this._getCurrentAppState(), fnOnNavigationError);
+			
+//			this.oNavigationHandler.navigate("FixedAsset", "manage", oNavParameters, {}, fnOnNavigationError);
+		},
+		
+		// onNavTargetsObtained: function(oEvent) {
+		// 	this._storeCurrentAppState();
+			
+		// 	var oParameters = oEvent.getParameters();
+			
+		// 	oParameters.show(
+		// 			this.sPopoverLinkTitle,
+		// 			null, null,
+		// 			this.oPopoverLayout
+		// 	);
+		// },
+		
 	onBeforeExport: function(oEvt) {
 		var mExcelSettings = oEvt.getParameter("exportSettings");
 		// GW export
