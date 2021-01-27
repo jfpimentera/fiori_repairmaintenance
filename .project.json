@@ -40,12 +40,12 @@
     "blockPushLevel": "Error"
   },
   "build": {
-    "buildRequired": true,
+    "buildRequired": false,
     "sourceFolder": "webapp",
     "targetFolder": "dist",
     "excludedFolders": [],
     "excludedFiles": [],
-    "lastBuildDateTime": "Tue, 05 Jan 2021 09:56:36 GMT"
+    "lastBuildDateTime": "Tue, 26 Jan 2021 09:32:26 GMT"
   },
   "mockpreview": {
     "mockUri": "/sap/opu/odata/sap/ZCDS_PM_RMCM_DETAIL_ITEM4_CDS",

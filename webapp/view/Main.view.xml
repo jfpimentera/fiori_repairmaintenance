@@ -108,6 +108,7 @@
 												<!--<Text text="2020" class="totalsCurrency"/>-->
 												<!--<Text text="{totalsModel>/results/0/Currency}" class="totalsCurrency"/>-->
 					<!--CHART-->
+					<!--RM Totals-->
 					<layout:Grid defaultSpan="L12 M12 S12" hSpacing="0.5" vSpacing=".5" class="customBackground3">
 						<layout:content>
 												<viz:Popover id="RMTotalsPopOver"></viz:Popover>
@@ -120,6 +121,16 @@
 						</layout:content>
 					</layout:Grid>
 					
+					<!--Cost Center Top-->
+					<layout:Grid defaultSpan="L12 M12 S12" hSpacing="0.5" vSpacing=".5" class="customBackground3">
+						<layout:content>
+												<viz:Popover id="TOPCostCenterPopOver"></viz:Popover>
+							
+							<core:Fragment fragmentName="ZUI_PM_RM_COST_MONITORING.view.subview.CostCenterTop" type="XML"/>
+						</layout:content>
+					</layout:Grid>
+					
+					<!--PM Top-->
 					<layout:Grid id="TopPM" defaultSpan="L12 M12 S12" hSpacing="0.5" vSpacing=".5" class="customBackground3">
 						<layout:content>
 												<viz:Popover id="TOPOrderTypePopOver"></viz:Popover>
@@ -130,13 +141,6 @@
 						</layout:content>
 					</layout:Grid>
 					
-					<layout:Grid defaultSpan="L12 M12 S12" hSpacing="0.5" vSpacing=".5" class="customBackground3">
-						<layout:content>
-												<viz:Popover id="TOPCostCenterPopOver"></viz:Popover>
-							
-							<core:Fragment fragmentName="ZUI_PM_RM_COST_MONITORING.view.subview.CostCenterTop" type="XML"/>
-						</layout:content>
-					</layout:Grid>
 					<!--CHART-->
 			
 			<!--Start Detail Table -->
@@ -192,7 +196,7 @@
 									    	<!--<core:CustomData value='\{"columnKey": "FIDocNo", "maxLength": "5", "columnIndex":"4", "leadingProperty":"FIDocNo"}'></core:CustomData>-->
 									    	<Label text="Order No" />
 									      <table:template>
-								                <Link text="{OrderNo}" press="handleActionPress"></Link>
+								                <Link text="{OrderNo}" press="onNavOrderNo"></Link>
 									     </table:template>
 									      <table:customData>
 						                		<core:CustomData key="p13nData" value='\{"columnKey": "OrderNo", "columnIndex":"9" \}' />
@@ -203,7 +207,7 @@
 									    	<!--<core:CustomData value='\{"columnKey": "FIDocNo", "maxLength": "5", "columnIndex":"4", "leadingProperty":"FIDocNo"}'></core:CustomData>-->
 									    	<Label text="FI Doc No" />
 									      <table:template>
-								                <Link text="{FIDocNo}" press="handleActionPress"></Link>
+								                <Link text="{FIDocNo}" press="onNavFIDocNo"></Link>
 									     </table:template>
 									      <table:customData>
 						                		<core:CustomData key="p13nData" value='\{"columnKey": "FIDocNo", "columnIndex":"19" \}' />
